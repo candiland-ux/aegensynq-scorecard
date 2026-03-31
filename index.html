@@ -11,11 +11,11 @@
   --bg:#080c10; --bg2:#0d1117; --bg3:#131920;
   --panel:#111820; --panel2:#192030;
   --border:#1e2a38; --border-bright:#2a3d52;
-  --teal:#00d4aa; --teal-dim:rgba(0,212,170,0.12); --teal-glow:rgba(0,212,170,0.06);
+  --teal:#3b7ef5; --teal-dim:rgba(59,126,245,0.14); --teal-glow:rgba(59,126,245,0.07);
   --blue:#3b82f6; --blue-dim:rgba(59,130,246,0.12);
   --amber:#f59e0b; --amber-dim:rgba(245,158,11,0.12);
   --red:#ef4444; --red-dim:rgba(239,68,68,0.1);
-  --green:#22c55e; --green-dim:rgba(34,197,94,0.1);
+  --green:#60a5fa; --green-dim:rgba(96,165,250,0.12);
   --text:#f0f4f8; --text-mid:#b8ccd8; --text-soft:#7a9ab2;
   --fd:'Syne',sans-serif; --fb:'IBM Plex Sans',sans-serif; --fm:'IBM Plex Mono',monospace;
 }
@@ -40,11 +40,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100
 .bk:hover{color:var(--teal);}
 
 .progress-track{height:2px;background:var(--border);flex-shrink:0;}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),#00a8d4);transition:width .4s ease;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),#6366f1);transition:width .4s ease;}
 
 .btn{padding:14px 24px;font-family:var(--fd);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;}
-.btn-teal{background:var(--teal);color:#080c10;}
-.btn-teal:hover{background:#00f0c0;}
+.btn-teal{background:var(--teal);color:#fff;}
+.btn-teal:hover{background:#5b9cf8;}
 .btn-outline{background:transparent;color:var(--teal);border:1px solid var(--teal);}
 .btn-outline:hover{background:var(--teal-dim);}
 .btn-ghost{background:transparent;color:var(--text-mid);border:1px solid var(--border);}
@@ -110,7 +110,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .splash-wordmark em{color:var(--teal);font-style:normal;}
 .splash-product{font-family:var(--fm);font-size:11px;letter-spacing:4px;color:var(--text-soft);text-transform:uppercase;margin-top:12px;}
 .splash-rule{width:40px;height:1px;background:var(--teal);margin:32px 0;opacity:.5;}
-.splash-tagline{font-family:var(--fd);font-size:18px;font-weight:500;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.splash-tagline{font-family:var(--fd);font-size:18px;font-weight:500;color:var(--text-mid);line-height:1.7;max-width:380px;margin:18px 0;}
 .splash-tagline strong{color:var(--text);font-weight:700;}
 .splash-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:32px 0;background:var(--border);}
 .stat-block{background:var(--panel);padding:18px 16px;}
@@ -175,7 +175,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .flag-amber{background:var(--amber-dim);color:var(--amber);}
 
 .gate-block{margin:0 24px 24px;padding:28px;background:var(--panel2);border:1px solid var(--border-bright);position:relative;overflow:hidden;}
-.gate-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),#3b82f6);}
+.gate-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),#6366f1);}
 .gate-bg{position:absolute;right:-10px;bottom:-10px;font-family:var(--fd);font-size:80px;font-weight:800;color:rgba(0,212,170,.04);pointer-events:none;}
 .gate-label{font-family:var(--fm);font-size:8px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:10px;}
 .gate-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:10px;}
@@ -247,7 +247,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     <div class="splash-wordmark">Data Health<br><em>Scorecard</em></div>
     <div class="splash-product">by AegenSynq · Clean Data. Clear Decisions.</div>
     <div class="splash-rule"></div>
-    <div class="splash-tagline">Your AI is only as good as your data. <strong>Find out where yours stands — in 5 minutes, free.</strong></div>
+    <div class="splash-tagline">Your AI is only as good as your data.<br><strong style="white-space:nowrap;">Find out where yours stands — in 5 minutes, free.</strong></div>
     <div class="splash-stats">
       <div class="stat-block"><div class="stat-num">$3.1T</div><div class="stat-label">Annual US cost of bad data (IBM)</div></div>
       <div class="stat-block"><div class="stat-num">40%</div><div class="stat-label">Agentic AI projects cancelled by 2027 (Gartner)</div></div>
@@ -257,6 +257,18 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     <div class="splash-cta">
       <button class="btn btn-teal" onclick="nav('s-step1')">Run My Scorecard — Free →</button>
       <div class="splash-cta-sub">5 minutes · No account required · Instant grade</div>
+    </div>
+    <div style="margin-top:20px;padding:14px 16px;border:1px solid rgba(255,255,255,.15);border-radius:6px;background:rgba(255,255,255,.06);">
+      <div style="font-family:var(--fm);font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.75);text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:8px;height:8px;border:1.5px solid rgba(255,255,255,.75);border-radius:50%;flex-shrink:0;"></span>
+        Privacy &amp; Data Security
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);line-height:1.7;">
+        This scorecard collects only the responses you enter here. <strong style="color:rgba(255,255,255,.85);font-weight:500;">No data is stored, transmitted, or retained</strong> after your session ends. We do not access your systems, databases, or files. Results are generated locally in your browser.
+      </div>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.1);font-size:10px;color:rgba(255,255,255,.45);line-height:1.6;">
+        AegenSynq does not sell, share, or monetize your responses. This tool is provided for informational purposes only and does not constitute a formal data audit or legal compliance assessment. For enterprise assessments, contact AegenSynq directly.
+      </div>
     </div>
   </div>
 </div>
@@ -584,7 +596,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       <div class="rpt-sec-label">30/60/90-Day Remediation Roadmap</div>
       <div class="remediation-item">
         <div class="rem-priority rem-p1">Priority 1</div>
-        <div class="rem-body"><div class="rem-title">Connect and deduplicate Jira + Salesforce records</div><div class="rem-desc">Entity resolution across your two highest-risk systems. AegenSynq's normalization engine resolves "John Smith" / "J. Smith" / "john@company.com" across tools automatically with human approval.</div><div class="rem-timeline">Days 1–30 · Estimated impact: -$340K annual waste</div></div>
+        <div class="rem-body"><div class="rem-title">Connect and deduplicate Jira + Salesforce records</div><div class="rem-desc">Entity resolution across your two highest-risk systems. AegenSynq's normalization engine resolves "John Smith" / "J. Smith" / "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fb91949395bb9894968b9a9582d5989496">[email&#160;protected]</a>" across tools automatically with human approval.</div><div class="rem-timeline">Days 1–30 · Estimated impact: -$340K annual waste</div></div>
       </div>
       <div class="remediation-item">
         <div class="rem-priority rem-p1">Priority 1</div>
@@ -627,7 +639,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function nav(id) {
   document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
@@ -679,15 +691,4 @@ function startCalc() {
       if (el) el.classList.add('done');
     }, delays[i]);
   });
-  setTimeout(function() { nav('s-results'); }, 3200);
-}
-
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, 2800);
-}
-</script>
-</body>
-</html>
+  setTimeout(function() { nav('s-results')

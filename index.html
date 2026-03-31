@@ -8,269 +8,228 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
 
 :root {
-  --bg: #080c10;
-  --bg2: #0d1117;
-  --bg3: #131920;
-  --panel: #111820;
-  --panel2: #192030;
-  --border: #1e2a38;
-  --border-bright: #2a3d52;
-  --teal: #00d4aa;
-  --teal-dim: rgba(0,212,170,0.12);
-  --teal-glow: rgba(0,212,170,0.06);
-  --blue: #3b82f6;
-  --blue-dim: rgba(59,130,246,0.12);
-  --amber: #f59e0b;
-  --amber-dim: rgba(245,158,11,0.12);
-  --red: #ef4444;
-  --red-dim: rgba(239,68,68,0.1);
-  --green: #22c55e;
-  --green-dim: rgba(34,197,94,0.1);
-  --text: #f0f4f8;
-  --text-mid: #b8ccd8;
-  --text-soft: #7a9ab2;
-  --fd: 'Syne', sans-serif;
-  --fb: 'IBM Plex Sans', sans-serif;
-  --fm: 'IBM Plex Mono', monospace;
+  --bg:#080c10; --bg2:#0d1117; --bg3:#131920;
+  --panel:#111820; --panel2:#192030;
+  --border:#1e2a38; --border-bright:#2a3d52;
+  --teal:#00d4aa; --teal-dim:rgba(0,212,170,0.12); --teal-glow:rgba(0,212,170,0.06);
+  --blue:#3b82f6; --blue-dim:rgba(59,130,246,0.12);
+  --amber:#f59e0b; --amber-dim:rgba(245,158,11,0.12);
+  --red:#ef4444; --red-dim:rgba(239,68,68,0.1);
+  --green:#22c55e; --green-dim:rgba(34,197,94,0.1);
+  --text:#f0f4f8; --text-mid:#b8ccd8; --text-soft:#7a9ab2;
+  --fd:'Syne',sans-serif; --fb:'IBM Plex Sans',sans-serif; --fm:'IBM Plex Mono',monospace;
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.screen{display:none;min-height:100vh;animation:si .35s cubic-bezier(.16,1,.3,1);}
+.screen.active{display:flex;flex-direction:column;}
+@keyframes si{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.scroll{overflow-y:auto;flex:1;}
 
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:var(--fb); min-height:100vh; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(0,212,170,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,.025) 1px,transparent 1px);
+  background-size:40px 40px;}
 
-.screen { display:none; min-height:100vh; animation:si .35s cubic-bezier(.16,1,.3,1); }
-.screen.active { display:flex; flex-direction:column; }
-@keyframes si { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.scroll { overflow-y:auto; flex:1; }
+.tb{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;
+  background:rgba(8,12,16,.92);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;flex-shrink:0;backdrop-filter:blur(8px);}
+.tb-logo{font-family:var(--fd);font-size:16px;font-weight:700;letter-spacing:2px;color:var(--text);}
+.tb-logo span{color:var(--teal);}
+.tb-tag{font-family:var(--fm);font-size:9px;letter-spacing:3px;color:var(--text-mid);text-transform:uppercase;}
+.bk{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--text-mid);background:none;border:none;cursor:pointer;text-transform:uppercase;transition:color .15s;}
+.bk:hover{color:var(--teal);}
 
-/* GRID BACKGROUND */
-.grid-bg {
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image: linear-gradient(rgba(0,212,170,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,170,.025) 1px, transparent 1px);
-  background-size:40px 40px;
-}
+.progress-track{height:2px;background:var(--border);flex-shrink:0;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),#00a8d4);transition:width .4s ease;}
 
-/* TOP BAR */
-.tb { display:flex; align-items:center; justify-content:space-between; padding:16px 24px;
-  background:rgba(8,12,16,.9); border-bottom:1px solid var(--border);
-  position:sticky; top:0; z-index:100; flex-shrink:0; backdrop-filter:blur(8px); }
-.tb-logo { font-family:var(--fd); font-size:16px; font-weight:700; letter-spacing:2px; color:var(--text); }
-.tb-logo span { color:var(--teal); }
-.tb-tag { font-family:var(--fm); font-size:9px; letter-spacing:3px; color:var(--text-soft); text-transform:uppercase; }
-.bk { font-family:var(--fm); font-size:9px; letter-spacing:2px; color:var(--text-soft); background:none; border:none; cursor:pointer; text-transform:uppercase; transition:color .15s; }
-.bk:hover { color:var(--teal); }
+.btn{padding:14px 24px;font-family:var(--fd);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;}
+.btn-teal{background:var(--teal);color:#080c10;}
+.btn-teal:hover{background:#00f0c0;}
+.btn-outline{background:transparent;color:var(--teal);border:1px solid var(--teal);}
+.btn-outline:hover{background:var(--teal-dim);}
+.btn-ghost{background:transparent;color:var(--text-mid);border:1px solid var(--border);}
+.btn-ghost:hover{border-color:var(--border-bright);color:var(--text);}
+.ab{padding:20px 24px;background:rgba(8,12,16,.92);border-top:1px solid var(--border);display:flex;gap:12px;flex-shrink:0;backdrop-filter:blur(8px);}
 
-/* PROGRESS BAR */
-.progress-track { height:2px; background:var(--border); flex-shrink:0; }
-.progress-fill { height:100%; background:linear-gradient(90deg,var(--teal),#00a8d4); transition:width .4s ease; }
+.step-header{padding:28px 24px 20px;position:relative;z-index:1;}
+.step-num{font-family:var(--fm);font-size:9px;letter-spacing:4px;color:var(--teal);text-transform:uppercase;margin-bottom:10px;}
+.step-title{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--text);line-height:1.2;}
+.step-sub{font-size:13px;color:var(--text-mid);margin-top:8px;line-height:1.6;}
 
-/* BUTTONS */
-.btn { padding:14px 24px; font-family:var(--fd); font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; cursor:pointer; border:none; transition:all .2s; }
-.btn-teal { background:var(--teal); color:#080c10; }
-.btn-teal:hover { background:#00f0c0; }
-.btn-outline { background:transparent; color:var(--teal); border:1px solid var(--teal); }
-.btn-outline:hover { background:var(--teal-dim); }
-.btn-ghost { background:transparent; color:var(--text-mid); border:1px solid var(--border); }
-.btn-ghost:hover { border-color:var(--border-bright); color:var(--text); }
-.ab { padding:20px 24px; background:rgba(8,12,16,.9); border-top:1px solid var(--border); display:flex; gap:12px; flex-shrink:0; backdrop-filter:blur(8px); }
+.opt-grid{padding:0 24px;display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:20px;}
+.opt{background:var(--panel);border:1px solid var(--border);padding:16px 18px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:14px;position:relative;z-index:1;}
+.opt:hover{border-color:var(--border-bright);background:var(--panel2);}
+.opt.sel{border-color:var(--teal);background:var(--teal-dim);}
+.opt-check{width:18px;height:18px;border:1px solid var(--border-bright);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:var(--fm);font-size:10px;color:transparent;}
+.opt.sel .opt-check{border-color:var(--teal);background:var(--teal);color:#080c10;}
+.opt-body{flex:1;}
+.opt-name{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--text);}
+.opt.sel .opt-name{color:var(--teal);}
+.opt-sub{font-size:12px;color:#9abdd4;margin-top:4px;line-height:1.4;}
+.opt-tag{font-family:var(--fm);font-size:8px;letter-spacing:1px;padding:3px 8px;flex-shrink:0;}
+.ot-critical{background:rgba(239,68,68,.15);color:var(--red);}
+.ot-warn{background:var(--amber-dim);color:var(--amber);}
+.ot-ok{background:var(--green-dim);color:var(--green);}
 
-/* STEP COUNTER */
-.step-header { padding:28px 24px 20px; position:relative; z-index:1; }
-.step-num { font-family:var(--fm); font-size:9px; letter-spacing:4px; color:var(--teal); text-transform:uppercase; margin-bottom:10px; }
-.step-title { font-family:var(--fd); font-size:26px; font-weight:700; color:var(--text); line-height:1.2; }
-.step-sub { font-size:13px; color:#b8ccd8; margin-top:8px; line-height:1.6; }
+.tool-grid{padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;position:relative;z-index:1;}
+.tool-item{background:var(--panel);border:1px solid var(--border);padding:13px 14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;}
+.tool-item:hover{border-color:var(--border-bright);}
+.tool-item.sel{border-color:var(--teal);background:var(--teal-dim);}
+.tool-cb{width:14px;height:14px;border:1px solid var(--border-bright);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .15s;}
+.tool-item.sel .tool-cb{background:var(--teal);border-color:var(--teal);color:#080c10;}
+.tool-icon{font-size:16px;flex-shrink:0;}
+.tool-name{font-family:var(--fb);font-size:13px;color:var(--text);font-weight:700;}
+.tool-item.sel .tool-name{color:var(--teal);}
 
-/* OPTION CARDS */
-.opt-grid { padding:0 24px; display:grid; grid-template-columns:1fr; gap:8px; margin-bottom:20px; }
-.opt-grid.two { grid-template-columns:1fr 1fr; }
-.opt { background:var(--panel); border:1px solid var(--border); padding:16px 18px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
-.opt:hover { border-color:var(--border-bright); background:var(--panel2); }
-.opt.sel { border-color:var(--teal); background:var(--teal-dim); }
-.opt-check { width:18px; height:18px; border:1px solid var(--border-bright); flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); font-size:9px; }
-.opt.sel .opt-check { border-color:var(--teal); background:var(--teal); color:#080c10; }
-.opt-body { flex:1; }
-.opt-name { font-family:var(--fd); font-size:14px; font-weight:700; color:var(--text); }
-.opt.sel .opt-name { color:var(--teal); }
-.opt-sub { font-size:11px; color:#8ab0c8; margin-top:3px; line-height:1.4; }
-.opt-tag { font-family:var(--fm); font-size:8px; letter-spacing:1px; padding:3px 8px; flex-shrink:0; }
-.ot-critical { background:rgba(239,68,68,.15); color:var(--red); }
-.ot-warn { background:var(--amber-dim); color:var(--amber); }
-.ot-ok { background:var(--green-dim); color:var(--green); }
+.slider-block{padding:0 24px;margin-bottom:20px;position:relative;z-index:1;}
+.sl-label-row{display:flex;justify-content:space-between;margin-bottom:8px;}
+.sl-label{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--text-mid);text-transform:uppercase;}
+.sl-val{font-family:var(--fm);font-size:14px;color:var(--teal);font-weight:500;}
+input[type=range]{width:100%;-webkit-appearance:none;height:2px;background:var(--border);outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:var(--teal);cursor:pointer;border-radius:0;}
+.sl-markers{display:flex;justify-content:space-between;margin-top:6px;}
+.sl-marker{font-family:var(--fm);font-size:8px;color:var(--text-soft);}
 
-/* TOOL CHECKBOXES */
-.tool-grid { padding:0 24px; display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:20px; position:relative; z-index:1; }
-.tool-item { background:var(--panel); border:1px solid var(--border); padding:13px 14px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:10px; }
-.tool-item:hover { border-color:var(--border-bright); }
-.tool-item.sel { border-color:var(--teal); background:var(--teal-dim); }
-.tool-cb { width:14px; height:14px; border:1px solid var(--border-bright); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:8px; transition:all .15s; }
-.tool-item.sel .tool-cb { background:var(--teal); border-color:var(--teal); color:#080c10; }
-.tool-item.sel .tool-cb::after { content:'✓'; }
-.tool-icon { font-size:16px; flex-shrink:0; }
-.tool-name { font-family:var(--fb); font-size:12px; color:var(--text); font-weight:700; }
-.tool-item.sel .tool-name { color:var(--teal); }
+.info-box{margin:0 24px 20px;padding:14px 16px;background:var(--teal-glow);border:1px solid rgba(0,212,170,.15);display:flex;gap:12px;align-items:flex-start;position:relative;z-index:1;}
+.ib-icon{font-family:var(--fm);font-size:9px;color:var(--teal);flex-shrink:0;letter-spacing:1px;margin-top:1px;}
+.ib-text{font-size:12px;color:var(--text-mid);line-height:1.6;}
 
-/* SLIDER */
-.slider-block { padding:0 24px; margin-bottom:20px; position:relative; z-index:1; }
-.sl-label-row { display:flex; justify-content:space-between; margin-bottom:8px; }
-.sl-label { font-family:var(--fm); font-size:9px; letter-spacing:2px; color:var(--text-soft); text-transform:uppercase; }
-.sl-val { font-family:var(--fm); font-size:14px; color:var(--teal); font-weight:500; }
-input[type=range] { width:100%; -webkit-appearance:none; height:2px; background:var(--border); outline:none; }
-input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; background:var(--teal); cursor:pointer; border-radius:0; }
-input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to right, var(--teal) 0%, var(--teal) var(--pct, 30%), var(--border) var(--pct, 30%)); }
-.sl-markers { display:flex; justify-content:space-between; margin-top:6px; }
-.sl-marker { font-family:var(--fm); font-size:8px; color:var(--text-soft); }
+.field-label{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:#9abdd4;text-transform:uppercase;margin-bottom:8px;display:block;}
+.field-input{width:100%;padding:14px 16px;background:var(--panel);border:1px solid var(--border);font-family:var(--fb);font-size:14px;color:var(--text);outline:none;transition:border-color .2s;}
+.field-input:focus{border-color:var(--teal);}
+.field-input::placeholder{color:var(--text-soft);}
+.field-select{width:100%;padding:14px 16px;background:var(--panel);border:1px solid var(--border);font-family:var(--fb);font-size:14px;color:var(--text);outline:none;cursor:pointer;-webkit-appearance:none;}
+.field-select:focus{border-color:var(--teal);}
 
-/* INFO BOX */
-.info-box { margin:0 24px 20px; padding:14px 16px; background:var(--teal-glow); border:1px solid rgba(0,212,170,.15); display:flex; gap:12px; align-items:flex-start; position:relative; z-index:1; }
-.ib-icon { font-family:var(--fm); font-size:9px; color:var(--teal); flex-shrink:0; letter-spacing:1px; margin-top:1px; }
-.ib-text { font-size:12px; color:#b8ccd8; line-height:1.6; }
+/* SPLASH */
+#s-splash{background:var(--bg);position:relative;overflow:hidden;}
+.splash-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 24px 40px;position:relative;z-index:1;}
+.splash-eyebrow{font-family:var(--fm);font-size:9px;letter-spacing:4px;color:var(--teal);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.splash-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal);}
+.splash-wordmark{font-family:var(--fd);font-size:clamp(32px,8vw,52px);font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-1px;}
+.splash-wordmark em{color:var(--teal);font-style:normal;}
+.splash-product{font-family:var(--fm);font-size:11px;letter-spacing:4px;color:var(--text-soft);text-transform:uppercase;margin-top:12px;}
+.splash-rule{width:40px;height:1px;background:var(--teal);margin:32px 0;opacity:.5;}
+.splash-tagline{font-family:var(--fd);font-size:18px;font-weight:500;color:var(--text-mid);line-height:1.6;max-width:320px;}
+.splash-tagline strong{color:var(--text);font-weight:700;}
+.splash-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:32px 0;background:var(--border);}
+.stat-block{background:var(--panel);padding:18px 16px;}
+.stat-num{font-family:var(--fd);font-size:28px;font-weight:800;color:var(--teal);line-height:1;}
+.stat-label{font-size:11px;color:var(--text-mid);margin-top:4px;line-height:1.4;}
+.splash-cta{display:flex;flex-direction:column;gap:10px;}
+.splash-cta .btn{padding:18px 24px;font-size:11px;letter-spacing:3px;width:100%;}
+.splash-cta-sub{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--text-soft);text-transform:uppercase;text-align:center;}
+.splash-bg-num{position:absolute;right:-20px;bottom:-30px;font-family:var(--fd);font-size:280px;font-weight:800;color:rgba(0,212,170,.025);line-height:1;pointer-events:none;letter-spacing:-10px;}
 
-/* ═══ SPLASH ═══ */
-#s-splash { background:var(--bg); position:relative; overflow:hidden; }
-.splash-content { flex:1; display:flex; flex-direction:column; justify-content:center; padding:60px 24px 40px; position:relative; z-index:1; }
-.splash-eyebrow { font-family:var(--fm); font-size:9px; letter-spacing:4px; color:var(--teal); text-transform:uppercase; margin-bottom:24px; display:flex; align-items:center; gap:12px; }
-.splash-eyebrow::before { content:''; width:24px; height:1px; background:var(--teal); }
-.splash-wordmark { font-family:var(--fd); font-size:clamp(32px,8vw,52px); font-weight:800; color:var(--text); line-height:1.1; letter-spacing:-1px; }
-.splash-wordmark em { color:var(--teal); font-style:normal; }
-.splash-product { font-family:var(--fm); font-size:11px; letter-spacing:4px; color:var(--text-soft); text-transform:uppercase; margin-top:12px; }
-.splash-rule { width:40px; height:1px; background:var(--teal); margin:32px 0; opacity:.5; }
-.splash-tagline { font-family:var(--fd); font-size:18px; font-weight:500; color:#b8ccd8; line-height:1.6; max-width:320px; }
-.splash-tagline strong { color:var(--text); font-weight:700; }
-.splash-stats { display:grid; grid-template-columns:1fr 1fr; gap:1px; margin:32px 0; background:var(--border); }
-.stat-block { background:var(--panel); padding:18px 16px; }
-.stat-num { font-family:var(--fd); font-size:28px; font-weight:800; color:var(--teal); line-height:1; }
-.stat-label { font-size:11px; color:#8ab0c8; margin-top:4px; line-height:1.4; }
-.splash-cta { display:flex; flex-direction:column; gap:10px; }
-.splash-cta .btn { padding:18px 24px; font-size:11px; letter-spacing:3px; }
-.splash-cta-sub { font-family:var(--fm); font-size:9px; letter-spacing:2px; color:var(--text-soft); text-transform:uppercase; text-align:center; }
-.splash-bg-num { position:absolute; right:-20px; bottom:-30px; font-family:var(--fd); font-size:280px; font-weight:800; color:rgba(0,212,170,.025); line-height:1; pointer-events:none; letter-spacing:-10px; }
+/* CALCULATING */
+#s-calc{background:var(--bg);align-items:center;justify-content:center;flex-direction:column;padding:40px 24px;text-align:center;}
+.calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:0 auto 40px;width:120px;}
+.calc-dot{width:36px;height:36px;background:var(--panel);animation:cp 1.2s ease-in-out infinite;}
+.calc-dot:nth-child(2){animation-delay:.15s;}
+.calc-dot:nth-child(3){animation-delay:.3s;}
+.calc-dot:nth-child(4){animation-delay:.45s;}
+.calc-dot:nth-child(5){animation-delay:.6s;}
+.calc-dot:nth-child(6){animation-delay:.75s;}
+.calc-dot:nth-child(7){animation-delay:.9s;}
+.calc-dot:nth-child(8){animation-delay:1.05s;}
+.calc-dot:nth-child(9){animation-delay:1.2s;}
+@keyframes cp{0%,100%{background:var(--panel)}50%{background:var(--teal)}}
+.calc-label{font-family:var(--fm);font-size:9px;letter-spacing:4px;color:var(--teal);text-transform:uppercase;margin-bottom:16px;}
+.calc-title{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--text);}
+.calc-sub{font-size:13px;color:var(--text-mid);margin-top:8px;line-height:1.6;}
+.calc-log{margin-top:28px;text-align:left;width:100%;max-width:320px;}
+.calc-log-item{font-family:var(--fm);font-size:10px;color:var(--text-soft);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.calc-log-item.done{color:var(--teal);}
+.calc-log-item::before{content:'○';color:var(--text-soft);}
+.calc-log-item.done::before{content:'✓';color:var(--teal);}
 
-/* ═══ CALCULATING ═══ */
-#s-calc { background:var(--bg); align-items:center; justify-content:center; flex-direction:column; padding:40px 24px; text-align:center; }
-.calc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin:0 auto 40px; width:120px; }
-.calc-dot { width:36px; height:36px; background:var(--panel); animation:calc-pulse 1.2s ease-in-out infinite; }
-.calc-dot:nth-child(2) { animation-delay:.15s; }
-.calc-dot:nth-child(3) { animation-delay:.3s; }
-.calc-dot:nth-child(4) { animation-delay:.45s; }
-.calc-dot:nth-child(5) { animation-delay:.6s; }
-.calc-dot:nth-child(6) { animation-delay:.75s; }
-.calc-dot:nth-child(7) { animation-delay:.9s; }
-.calc-dot:nth-child(8) { animation-delay:1.05s; }
-.calc-dot:nth-child(9) { animation-delay:1.2s; }
-@keyframes calc-pulse { 0%,100%{background:var(--panel)} 50%{background:var(--teal)} }
-.calc-label { font-family:var(--fm); font-size:9px; letter-spacing:4px; color:var(--teal); text-transform:uppercase; margin-bottom:16px; }
-.calc-title { font-family:var(--fd); font-size:24px; font-weight:700; color:var(--text); }
-.calc-sub { font-size:13px; color:#b8ccd8; margin-top:8px; line-height:1.6; }
-.calc-log { margin-top:28px; text-align:left; width:100%; max-width:320px; }
-.calc-log-item { font-family:var(--fm); font-size:10px; color:var(--text-soft); padding:6px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
-.calc-log-item.done { color:var(--teal); }
-.calc-log-item.done::before { content:'✓'; }
-.calc-log-item:not(.done)::before { content:'○'; color:var(--text-soft); }
+/* RESULTS */
+#s-results{background:var(--bg);}
+.results-hero{padding:32px 24px 28px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+.rh-eyebrow{font-family:var(--fm);font-size:9px;letter-spacing:4px;color:var(--text-soft);text-transform:uppercase;margin-bottom:18px;}
+.grade-wrap{display:flex;align-items:center;gap:20px;margin-bottom:16px;}
+.grade-box{width:80px;height:80px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid;}
+.grade-letter{font-family:var(--fd);font-size:48px;font-weight:800;line-height:1;}
+.grade-d{border-color:var(--amber);color:var(--amber);background:var(--amber-dim);}
+.grade-info{flex:1;}
+.grade-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--text);}
+.grade-sub{font-size:12px;color:var(--text-mid);margin-top:5px;line-height:1.5;}
+.score-bar-wrap{margin-top:14px;}
+.score-bar-label{display:flex;justify-content:space-between;font-family:var(--fm);font-size:8px;color:var(--text-soft);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px;}
+.score-bar{height:4px;background:var(--border);}
+.score-fill{height:100%;transition:width .6s ease;}
+.rh-bg{position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-family:var(--fd);font-size:140px;font-weight:800;color:rgba(0,212,170,.03);pointer-events:none;line-height:1;}
 
-/* ═══ RESULTS ═══ */
-#s-results { background:var(--bg); }
-.results-hero { padding:32px 24px 28px; position:relative; overflow:hidden; border-bottom:1px solid var(--border); }
-.rh-eyebrow { font-family:var(--fm); font-size:9px; letter-spacing:4px; color:var(--text-soft); text-transform:uppercase; margin-bottom:18px; }
-.grade-wrap { display:flex; align-items:center; gap:20px; margin-bottom:16px; }
-.grade-box { width:80px; height:80px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:2px solid; }
-.grade-letter { font-family:var(--fd); font-size:48px; font-weight:800; line-height:1; }
-.grade-a { border-color:var(--green); color:var(--green); background:var(--green-dim); }
-.grade-b { border-color:#86efac; color:#86efac; background:rgba(134,239,172,.08); }
-.grade-c { border-color:var(--teal); color:var(--teal); background:var(--teal-dim); }
-.grade-d { border-color:var(--amber); color:var(--amber); background:var(--amber-dim); }
-.grade-f { border-color:var(--red); color:var(--red); background:var(--red-dim); }
-.grade-info { flex:1; }
-.grade-title { font-family:var(--fd); font-size:22px; font-weight:700; color:var(--text); }
-.grade-sub { font-size:12px; color:var(--text-mid); margin-top:5px; line-height:1.5; }
-.score-bar-wrap { margin-top:14px; }
-.score-bar-label { display:flex; justify-content:space-between; font-family:var(--fm); font-size:8px; color:var(--text-soft); margin-bottom:5px; text-transform:uppercase; letter-spacing:1px; }
-.score-bar { height:4px; background:var(--border); }
-.score-fill { height:100%; transition:width .6s ease; }
-.rh-bg { position:absolute; right:-10px; top:50%; transform:translateY(-50%); font-family:var(--fd); font-size:140px; font-weight:800; color:rgba(0,212,170,.03); pointer-events:none; line-height:1; }
+.dim-section{padding:8px 24px 24px;}
+.dim-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+.dim-h-label{font-family:var(--fm);font-size:8px;letter-spacing:3px;color:var(--text-soft);text-transform:uppercase;}
+.dim-card{background:var(--panel);border:1px solid var(--border);padding:16px 18px;margin-bottom:8px;}
+.dc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.dc-name{font-family:var(--fd);font-size:14px;font-weight:600;color:var(--text);}
+.dc-score{font-family:var(--fm);font-size:13px;font-weight:500;}
+.dc-bar-track{height:2px;background:var(--border);margin-bottom:6px;}
+.dc-bar-fill{height:100%;}
+.dc-finding{font-size:12px;color:var(--text-mid);line-height:1.5;}
+.dc-flag{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-family:var(--fm);font-size:8px;letter-spacing:1px;padding:3px 8px;}
+.flag-red{background:var(--red-dim);color:var(--red);}
+.flag-amber{background:var(--amber-dim);color:var(--amber);}
 
-/* DIMENSION CARDS */
-.dim-section { padding:8px 24px 24px; }
-.dim-header { display:flex; align-items:center; justify-content:space-between; padding:18px 0 10px; border-bottom:1px solid var(--border); margin-bottom:10px; }
-.dim-h-label { font-family:var(--fm); font-size:8px; letter-spacing:3px; color:var(--text-soft); text-transform:uppercase; }
-.dim-card { background:var(--panel); border:1px solid var(--border); padding:16px 18px; margin-bottom:8px; }
-.dc-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
-.dc-name { font-family:var(--fd); font-size:14px; font-weight:600; color:var(--text); }
-.dc-score { font-family:var(--fm); font-size:13px; font-weight:500; }
-.dc-bar-track { height:2px; background:var(--border); margin-bottom:6px; }
-.dc-bar-fill { height:100%; transition:width .5s; }
-.dc-finding { font-size:11px; color:#b8ccd8; line-height:1.5; }
-.dc-flag { display:inline-flex; align-items:center; gap:5px; margin-top:6px; font-family:var(--fm); font-size:8px; letter-spacing:1px; padding:3px 8px; }
-.flag-red { background:var(--red-dim); color:var(--red); }
-.flag-amber { background:var(--amber-dim); color:var(--amber); }
-.flag-green { background:var(--green-dim); color:var(--green); }
+.gate-block{margin:0 24px 24px;padding:28px;background:var(--panel2);border:1px solid var(--border-bright);position:relative;overflow:hidden;}
+.gate-block::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),#3b82f6);}
+.gate-bg{position:absolute;right:-10px;bottom:-10px;font-family:var(--fd);font-size:80px;font-weight:800;color:rgba(0,212,170,.04);pointer-events:none;}
+.gate-label{font-family:var(--fm);font-size:8px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:10px;}
+.gate-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:10px;}
+.gate-items{margin-bottom:20px;}
+.gate-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-mid);line-height:1.5;}
+.gate-item:last-child{border-bottom:none;}
+.gate-check{font-family:var(--fm);font-size:9px;color:var(--teal);flex-shrink:0;margin-top:2px;}
 
-/* GATE */
-.gate-block { margin:0 24px 24px; padding:28px; background:var(--panel2); border:1px solid var(--border-bright); position:relative; overflow:hidden; }
-.gate-block::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--teal),#3b82f6); }
-.gate-bg { position:absolute; right:-10px; bottom:-10px; font-family:var(--fd); font-size:80px; font-weight:800; color:rgba(0,212,170,.04); pointer-events:none; }
-.gate-label { font-family:var(--fm); font-size:8px; letter-spacing:3px; color:var(--teal); text-transform:uppercase; margin-bottom:10px; }
-.gate-title { font-family:var(--fd); font-size:22px; font-weight:700; color:var(--text); line-height:1.3; margin-bottom:10px; }
-.gate-items { margin-bottom:20px; }
-.gate-item { display:flex; align-items:flex-start; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:12px; color:#b8ccd8; line-height:1.5; }
-.gate-item:last-child { border-bottom:none; }
-.gate-check { font-family:var(--fm); font-size:9px; color:var(--teal); flex-shrink:0; margin-top:2px; }
-.gate-btns { display:flex; flex-direction:column; gap:8px; }
+/* UNLOCK */
+#s-unlock{background:var(--bg);}
+.unlock-hero{padding:32px 24px 24px;border-bottom:1px solid var(--border);}
+.unlock-title{font-family:var(--fd);font-size:26px;font-weight:700;color:var(--text);line-height:1.3;}
+.unlock-sub{font-size:13px;color:var(--text-mid);margin-top:8px;line-height:1.6;}
 
-/* ═══ UNLOCK (Account Creation) ═══ */
-#s-unlock { background:var(--bg); }
-.unlock-hero { padding:32px 24px 24px; border-bottom:1px solid var(--border); }
-.unlock-title { font-family:var(--fd); font-size:26px; font-weight:700; color:var(--text); line-height:1.3; }
-.unlock-sub { font-size:13px; color:#b8ccd8; margin-top:8px; line-height:1.6; }
-.field-block { padding:0 24px; margin-bottom:16px; position:relative; z-index:1; }
-.field-label { font-family:var(--fm); font-size:9px; letter-spacing:2px; color:#8ab0c8; text-transform:uppercase; margin-bottom:8px; display:block; }
-.field-input { width:100%; padding:14px 16px; background:var(--panel); border:1px solid var(--border); font-family:var(--fb); font-size:14px; color:var(--text); outline:none; transition:border-color .2s; }
-.field-input:focus { border-color:var(--teal); }
-.field-input::placeholder { color:var(--text-soft); }
-.field-select { width:100%; padding:14px 16px; background:var(--panel); border:1px solid var(--border); font-family:var(--fb); font-size:14px; color:var(--text); outline:none; cursor:pointer; -webkit-appearance:none; }
-.field-select:focus { border-color:var(--teal); }
+/* FULL REPORT */
+#s-report{background:var(--bg);}
+.report-header{padding:28px 24px 22px;background:var(--panel);border-bottom:1px solid var(--border);}
+.rpt-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.rpt-wordmark{font-family:var(--fd);font-size:13px;font-weight:700;letter-spacing:2px;color:var(--text);}
+.rpt-wordmark span{color:var(--teal);}
+.rpt-date{font-family:var(--fm);font-size:9px;color:var(--text-soft);letter-spacing:1px;}
+.rpt-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--text);}
+.rpt-org{font-family:var(--fm);font-size:10px;color:var(--teal);letter-spacing:2px;margin-top:4px;}
+.rpt-section{padding:20px 24px;border-bottom:1px solid var(--border);}
+.rpt-sec-label{font-family:var(--fm);font-size:8px;letter-spacing:4px;color:var(--teal);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.rpt-sec-label::before{content:'';width:16px;height:1px;background:var(--teal);}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.roi-card{background:var(--panel2);border:1px solid var(--border);padding:16px;}
+.roi-val{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--teal);line-height:1;}
+.roi-label{font-size:11px;color:var(--text-mid);margin-top:4px;line-height:1.4;}
+.remediation-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+.rem-priority{font-family:var(--fm);font-size:8px;letter-spacing:1px;padding:3px 8px;flex-shrink:0;align-self:flex-start;}
+.rem-p1{background:var(--red-dim);color:var(--red);}
+.rem-p2{background:var(--amber-dim);color:var(--amber);}
+.rem-p3{background:var(--teal-dim);color:var(--teal);}
+.rem-body{flex:1;}
+.rem-title{font-family:var(--fd);font-size:14px;font-weight:600;color:var(--text);}
+.rem-desc{font-size:11px;color:var(--text-mid);margin-top:4px;line-height:1.5;}
+.rem-timeline{font-family:var(--fm);font-size:8px;color:var(--text-soft);margin-top:5px;letter-spacing:1px;}
+.rm-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.rm-label{font-size:12px;color:var(--text-mid);flex:1;}
+.rm-bar-track{width:100px;height:3px;background:var(--border);flex-shrink:0;}
+.rm-bar-fill{height:100%;}
+.rm-pct{font-family:var(--fm);font-size:10px;flex-shrink:0;width:32px;text-align:right;}
+.next-steps{padding:20px 24px 32px;}
+.ns-label{font-family:var(--fm);font-size:8px;letter-spacing:4px;color:var(--text-soft);text-transform:uppercase;margin-bottom:14px;}
+.ns-step{display:flex;gap:14px;padding:14px;background:var(--panel);border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:all .2s;}
+.ns-step:hover{border-color:var(--teal);background:var(--teal-glow);}
+.ns-num{font-family:var(--fm);font-size:10px;color:var(--teal);flex-shrink:0;}
+.ns-title{font-family:var(--fd);font-size:14px;font-weight:600;color:var(--text);}
+.ns-desc{font-size:11px;color:var(--text-mid);margin-top:3px;line-height:1.5;}
 
-/* ═══ FULL REPORT ═══ */
-#s-report { background:var(--bg); }
-.report-header { padding:28px 24px 22px; background:var(--panel); border-bottom:1px solid var(--border); }
-.rpt-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-.rpt-wordmark { font-family:var(--fd); font-size:13px; font-weight:700; letter-spacing:2px; color:var(--text); }
-.rpt-wordmark span { color:var(--teal); }
-.rpt-date { font-family:var(--fm); font-size:9px; color:var(--text-soft); letter-spacing:1px; }
-.rpt-title { font-family:var(--fd); font-size:22px; font-weight:700; color:var(--text); }
-.rpt-org { font-family:var(--fm); font-size:10px; color:var(--teal); letter-spacing:2px; margin-top:4px; }
-.rpt-section { padding:20px 24px; border-bottom:1px solid var(--border); }
-.rpt-sec-label { font-family:var(--fm); font-size:8px; letter-spacing:4px; color:var(--teal); text-transform:uppercase; margin-bottom:14px; display:flex; align-items:center; gap:10px; }
-.rpt-sec-label::before { content:''; width:16px; height:1px; background:var(--teal); }
-.roi-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-.roi-card { background:var(--panel2); border:1px solid var(--border); padding:16px; }
-.roi-val { font-family:var(--fd); font-size:26px; font-weight:800; color:var(--teal); line-height:1; }
-.roi-label { font-size:11px; color:#b8ccd8; margin-top:4px; line-height:1.4; }
-.remediation-item { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
-.rem-priority { font-family:var(--fm); font-size:8px; letter-spacing:1px; padding:3px 8px; flex-shrink:0; align-self:flex-start; }
-.rem-p1 { background:var(--red-dim); color:var(--red); }
-.rem-p2 { background:var(--amber-dim); color:var(--amber); }
-.rem-p3 { background:var(--teal-dim); color:var(--teal); }
-.rem-body { flex:1; }
-.rem-title { font-family:var(--fd); font-size:14px; font-weight:600; color:var(--text); }
-.rem-desc { font-size:11px; color:#b8ccd8; margin-top:4px; line-height:1.5; }
-.rem-timeline { font-family:var(--fm); font-size:8px; color:var(--text-soft); margin-top:5px; letter-spacing:1px; }
-.readiness-meter { margin-top:10px; }
-.rm-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); }
-.rm-label { font-size:12px; color:var(--text-mid); flex:1; }
-.rm-bar-track { width:100px; height:3px; background:var(--border); flex-shrink:0; }
-.rm-bar-fill { height:100%; }
-.rm-pct { font-family:var(--fm); font-size:10px; flex-shrink:0; width:32px; text-align:right; }
-.next-steps { padding:20px 24px 32px; }
-.ns-label { font-family:var(--fm); font-size:8px; letter-spacing:4px; color:var(--text-soft); text-transform:uppercase; margin-bottom:14px; }
-.ns-step { display:flex; gap:14px; padding:14px; background:var(--panel); border:1px solid var(--border); margin-bottom:8px; cursor:pointer; transition:all .2s; }
-.ns-step:hover { border-color:var(--teal); background:var(--teal-glow); }
-.ns-num { font-family:var(--fm); font-size:10px; color:var(--teal); flex-shrink:0; }
-.ns-title { font-family:var(--fd); font-size:14px; font-weight:600; color:var(--text); }
-.ns-desc { font-size:11px; color:var(--text-mid); margin-top:3px; line-height:1.5; }
-
-/* TOAST */
-.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(10px); background:var(--teal); color:#080c10; padding:10px 20px; font-family:var(--fm); font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:0; transition:all .3s; z-index:300; white-space:nowrap; pointer-events:none; }
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--teal);color:#080c10;padding:10px 20px;font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:0;transition:all .3s;z-index:300;white-space:nowrap;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
@@ -290,22 +249,10 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
     <div class="splash-rule"></div>
     <div class="splash-tagline">Your AI is only as good as your data. <strong>Find out where yours stands — in 5 minutes, free.</strong></div>
     <div class="splash-stats">
-      <div class="stat-block">
-        <div class="stat-num">$3.1T</div>
-        <div class="stat-label">Annual US cost of bad data (IBM)</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">40%</div>
-        <div class="stat-label">Agentic AI projects cancelled by 2027 (Gartner)</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">15–30%</div>
-        <div class="stat-label">Avg duplicate records across systems</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">106</div>
-        <div class="stat-label">Avg SaaS apps per company in 2024</div>
-      </div>
+      <div class="stat-block"><div class="stat-num">$3.1T</div><div class="stat-label">Annual US cost of bad data (IBM)</div></div>
+      <div class="stat-block"><div class="stat-num">40%</div><div class="stat-label">Agentic AI projects cancelled by 2027 (Gartner)</div></div>
+      <div class="stat-block"><div class="stat-num">15–30%</div><div class="stat-label">Avg duplicate records across systems</div></div>
+      <div class="stat-block"><div class="stat-num">106</div><div class="stat-label">Avg SaaS apps per company in 2024</div></div>
     </div>
     <div class="splash-cta">
       <button class="btn btn-teal" onclick="nav('s-step1')">Run My Scorecard — Free →</button>
@@ -314,77 +261,38 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
   </div>
 </div>
 
-<!-- STEP 1: COMPANY PROFILE -->
+<!-- STEP 1 -->
 <div id="s-step1" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-splash')">← Back</button>
-    <div class="tb-tag">Step 1 of 5</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-splash')">← Back</button><div class="tb-tag">Step 1 of 5</div><div></div></div>
   <div class="progress-track"><div class="progress-fill" style="width:20%"></div></div>
   <div class="scroll">
     <div class="step-header">
       <div class="step-num">Step 01 — Organization Profile</div>
       <div class="step-title">Tell us about your organization.</div>
-      <div class="step-sub">Your answers calibrate the scoring model. All results are based on your inputs — we don't access your systems.</div>
+      <div class="step-sub">Your answers calibrate the scoring model. We don't access your systems — all results are based on your inputs.</div>
     </div>
-    <div style="padding:0 24px;margin-bottom:6px;position:relative;z-index:1;">
-      <div class="field-label">Organization size</div>
-    </div>
-    <div class="opt-grid" style="margin-bottom:20px;">
-      <div class="opt" id="sz-sm" onclick="selOpt('sz','sm',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Small Business</div><div class="opt-sub">5–49 employees</div></div>
-      </div>
-      <div class="opt" id="sz-mid" onclick="selOpt('sz','mid',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Mid-Market</div><div class="opt-sub">50–499 employees</div></div>
-      </div>
-      <div class="opt" id="sz-ent" onclick="selOpt('sz','ent',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Enterprise</div><div class="opt-sub">500+ employees</div></div>
-      </div>
-      <div class="opt" id="sz-gov" onclick="selOpt('sz','gov',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Government / Nonprofit</div><div class="opt-sub">Public sector, school district, healthcare, or nonprofit</div></div>
-      </div>
-    </div>
-    <div style="padding:0 24px;margin-bottom:6px;position:relative;z-index:1;">
-      <div class="field-label">Primary AI objective</div>
-    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">Organization size</label></div>
     <div class="opt-grid">
-      <div class="opt" id="ai-start" onclick="selOpt('ai','start',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Planning first AI adoption</div><div class="opt-sub">Haven't deployed AI yet — evaluating options</div></div>
-      </div>
-      <div class="opt" id="ai-fix" onclick="selOpt('ai','fix',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">AI deployed but underperforming</div><div class="opt-sub">Getting inconsistent or unreliable results</div></div>
-      </div>
-      <div class="opt" id="ai-silo" onclick="selOpt('ai','silo',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">AI siloed inside each tool</div><div class="opt-sub">Jira AI, Salesforce AI, etc. — no cross-system view</div></div>
-      </div>
-      <div class="opt" id="ai-legacy" onclick="selOpt('ai','legacy',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Need to digitize first</div><div class="opt-sub">Still on paper, spreadsheets, or legacy systems</div></div>
-      </div>
+      <div class="opt" id="sz-sm" onclick="selOpt('sz','sm',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Small Business</div><div class="opt-sub">5–49 employees</div></div></div>
+      <div class="opt" id="sz-mid" onclick="selOpt('sz','mid',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Mid-Market</div><div class="opt-sub">50–499 employees</div></div></div>
+      <div class="opt" id="sz-ent" onclick="selOpt('sz','ent',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Enterprise</div><div class="opt-sub">500+ employees</div></div></div>
+      <div class="opt" id="sz-gov" onclick="selOpt('sz','gov',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Government / Nonprofit</div><div class="opt-sub">Public sector, school district, healthcare, or nonprofit</div></div></div>
+    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">Primary AI objective</label></div>
+    <div class="opt-grid">
+      <div class="opt" id="ai-start" onclick="selOpt('ai','start',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Planning first AI adoption</div><div class="opt-sub">Haven't deployed AI yet — evaluating options</div></div></div>
+      <div class="opt" id="ai-fix" onclick="selOpt('ai','fix',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">AI deployed but underperforming</div><div class="opt-sub">Getting inconsistent or unreliable results</div></div></div>
+      <div class="opt" id="ai-silo" onclick="selOpt('ai','silo',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">AI siloed inside each tool</div><div class="opt-sub">Jira AI, Salesforce AI — no cross-system view</div></div></div>
+      <div class="opt" id="ai-legacy" onclick="selOpt('ai','legacy',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Need to digitize first</div><div class="opt-sub">Still on paper, spreadsheets, or legacy systems</div></div></div>
     </div>
     <div style="height:20px;"></div>
   </div>
-  <div class="ab">
-    <button class="btn btn-ghost" onclick="nav('s-splash')">Back</button>
-    <button class="btn btn-teal" onclick="nav('s-step2')">Continue →</button>
-  </div>
+  <div class="ab"><button class="btn btn-ghost" onclick="nav('s-splash')">Back</button><button class="btn btn-teal" onclick="nav('s-step2')">Continue →</button></div>
 </div>
 
-<!-- STEP 2: CONNECTED TOOLS -->
+<!-- STEP 2 -->
 <div id="s-step2" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-step1')">← Back</button>
-    <div class="tb-tag">Step 2 of 5</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-step1')">← Back</button><div class="tb-tag">Step 2 of 5</div><div></div></div>
   <div class="progress-track"><div class="progress-fill" style="width:40%"></div></div>
   <div class="scroll">
     <div class="step-header">
@@ -392,353 +300,177 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
       <div class="step-title">Which tools does your organization use?</div>
       <div class="step-sub">Select all that apply. Each connected system is a potential source of data inconsistency — and a source of cross-system intelligence once cleaned.</div>
     </div>
-    <div style="padding:0 24px 8px;position:relative;z-index:1;">
-      <div class="field-label">Project & Work Management</div>
-    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">Project &amp; Work Management</label></div>
     <div class="tool-grid">
-      <div class="tool-item" id="t-jira" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🔵</div><div class="tool-name">Jira</div></div>
-      <div class="tool-item" id="t-asana" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🔴</div><div class="tool-name">Asana</div></div>
-      <div class="tool-item" id="t-monday" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟡</div><div class="tool-name">Monday.com</div></div>
-      <div class="tool-item" id="t-smartsheet" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟢</div><div class="tool-name">Smartsheet</div></div>
-      <div class="tool-item" id="t-clickup" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟣</div><div class="tool-name">ClickUp</div></div>
-      <div class="tool-item" id="t-notion" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">⬛</div><div class="tool-name">Notion</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🔵</div><div class="tool-name">Jira</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🔴</div><div class="tool-name">Asana</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟡</div><div class="tool-name">Monday.com</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟢</div><div class="tool-name">Smartsheet</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟣</div><div class="tool-name">ClickUp</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">⬛</div><div class="tool-name">Notion</div></div>
     </div>
-    <div style="padding:0 24px 8px;margin-top:12px;position:relative;z-index:1;">
-      <div class="field-label">CRM & Sales</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:12px;position:relative;z-index:1;"><label class="field-label">CRM &amp; Sales</label></div>
     <div class="tool-grid">
-      <div class="tool-item" id="t-sf" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">☁️</div><div class="tool-name">Salesforce</div></div>
-      <div class="tool-item" id="t-hubspot" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟠</div><div class="tool-name">HubSpot</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">☁️</div><div class="tool-name">Salesforce</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🟠</div><div class="tool-name">HubSpot</div></div>
     </div>
-    <div style="padding:0 24px 8px;margin-top:12px;position:relative;z-index:1;">
-      <div class="field-label">Communication & Collaboration</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:12px;position:relative;z-index:1;"><label class="field-label">Communication &amp; Collaboration</label></div>
     <div class="tool-grid">
-      <div class="tool-item" id="t-slack" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">💬</div><div class="tool-name">Slack</div></div>
-      <div class="tool-item" id="t-teams" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🔷</div><div class="tool-name">MS Teams</div></div>
-      <div class="tool-item" id="t-gws" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🌐</div><div class="tool-name">Google Workspace</div></div>
-      <div class="tool-item" id="t-github" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">⚫</div><div class="tool-name">GitHub</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">💬</div><div class="tool-name">Slack</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🔷</div><div class="tool-name">MS Teams</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🌐</div><div class="tool-name">Google Workspace</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">⚫</div><div class="tool-name">GitHub</div></div>
     </div>
-    <div style="padding:0 24px 8px;margin-top:12px;position:relative;z-index:1;">
-      <div class="field-label">Legacy & Other</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:12px;position:relative;z-index:1;"><label class="field-label">Legacy &amp; Other</label></div>
     <div class="tool-grid">
-      <div class="tool-item" id="t-excel" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">📊</div><div class="tool-name">Excel / Spreadsheets</div></div>
-      <div class="tool-item" id="t-paper" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">📄</div><div class="tool-name">Paper / Manual records</div></div>
-      <div class="tool-item" id="t-erp" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🏗</div><div class="tool-name">Legacy ERP / Database</div></div>
-      <div class="tool-item" id="t-other" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">⚙️</div><div class="tool-name">Other tools</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">📊</div><div class="tool-name">Excel / Spreadsheets</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">📄</div><div class="tool-name">Paper / Manual records</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">🏗</div><div class="tool-name">Legacy ERP / Database</div></div>
+      <div class="tool-item" onclick="toggleTool(this)"><div class="tool-cb"></div><div class="tool-icon">⚙️</div><div class="tool-name">Other tools</div></div>
     </div>
     <div class="info-box" style="margin-top:16px;">
       <div class="ib-icon">ℹ</div>
-      <div class="ib-text">Each additional tool increases cross-system inconsistency risk. Organizations with 8+ tools have 3.2× more data conflicts than those with 4 or fewer.</div>
+      <div class="ib-text">Organizations with 8+ tools have 3.2× more data conflicts than those with 4 or fewer. Each new connection surfaces more inconsistencies without a data quality layer underneath.</div>
     </div>
     <div style="height:20px;"></div>
   </div>
-  <div class="ab">
-    <button class="btn btn-ghost" onclick="nav('s-step1')">Back</button>
-    <button class="btn btn-teal" onclick="nav('s-step3')">Continue →</button>
-  </div>
+  <div class="ab"><button class="btn btn-ghost" onclick="nav('s-step1')">Back</button><button class="btn btn-teal" onclick="nav('s-step3')">Continue →</button></div>
 </div>
 
-<!-- STEP 3: DATA QUALITY -->
+<!-- STEP 3 -->
 <div id="s-step3" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-step2')">← Back</button>
-    <div class="tb-tag">Step 3 of 5</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-step2')">← Back</button><div class="tb-tag">Step 3 of 5</div><div></div></div>
   <div class="progress-track"><div class="progress-fill" style="width:60%"></div></div>
   <div class="scroll">
     <div class="step-header">
       <div class="step-num">Step 03 — Data Quality</div>
       <div class="step-title">How clean is your data today?</div>
-      <div class="step-sub">Answer honestly. These questions score the four dimensions that most predict AI failure: duplication, naming consistency, completeness, and cross-system conflict.</div>
+      <div class="step-sub">Answer honestly. These score the four dimensions that most predict AI failure: duplication, naming consistency, completeness, and cross-system conflict.</div>
     </div>
-
-    <div style="padding:0 24px 8px;position:relative;z-index:1;">
-      <div class="field-label">Duplicate records — how severe is the problem?</div>
-    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">Duplicate records — how severe is the problem?</label></div>
     <div class="opt-grid">
-      <div class="opt" id="dup-none" onclick="selOpt('dup','none',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Minimal or none</div><div class="opt-sub">We actively manage and deduplicate</div></div>
-        <div class="opt-tag ot-ok">Low risk</div>
-      </div>
-      <div class="opt" id="dup-some" onclick="selOpt('dup','some',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Some duplicates</div><div class="opt-sub">We know they exist but haven't cleaned them</div></div>
-        <div class="opt-tag ot-warn">Moderate</div>
-      </div>
-      <div class="opt" id="dup-lots" onclick="selOpt('dup','lots',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Significant duplicates</div><div class="opt-sub">Duplicates across multiple systems — scope unknown</div></div>
-        <div class="opt-tag ot-critical">High risk</div>
-      </div>
-      <div class="opt" id="dup-unknown" onclick="selOpt('dup','unknown',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Unknown</div><div class="opt-sub">We've never assessed this</div></div>
-        <div class="opt-tag ot-critical">Critical</div>
-      </div>
+      <div class="opt" id="dup-none" onclick="selOpt('dup','none',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Minimal or none</div><div class="opt-sub">We actively manage and deduplicate</div></div><div class="opt-tag ot-ok">Low risk</div></div>
+      <div class="opt" id="dup-some" onclick="selOpt('dup','some',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Some duplicates</div><div class="opt-sub">We know they exist but haven't cleaned them</div></div><div class="opt-tag ot-warn">Moderate</div></div>
+      <div class="opt" id="dup-lots" onclick="selOpt('dup','lots',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Significant duplicates</div><div class="opt-sub">Duplicates across multiple systems — scope unknown</div></div><div class="opt-tag ot-critical">High risk</div></div>
+      <div class="opt" id="dup-unknown" onclick="selOpt('dup','unknown',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Unknown — never assessed</div><div class="opt-sub">We have no visibility into duplication rates</div></div><div class="opt-tag ot-critical">Critical</div></div>
     </div>
-
-    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;">
-      <div class="field-label">Naming conventions — how consistent are field names across tools?</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;"><label class="field-label">Naming conventions across tools</label></div>
     <div class="opt-grid">
-      <div class="opt" id="nc-consistent" onclick="selOpt('nc','consistent',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Consistent</div><div class="opt-sub">Same field names and formats across systems</div></div>
-        <div class="opt-tag ot-ok">Low risk</div>
-      </div>
-      <div class="opt" id="nc-mixed" onclick="selOpt('nc','mixed',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Inconsistent</div><div class="opt-sub">"Status" in Jira vs. "Stage" in Salesforce vs. "Phase" in Smartsheet</div></div>
-        <div class="opt-tag ot-critical">High risk</div>
-      </div>
+      <div class="opt" id="nc-consistent" onclick="selOpt('nc','consistent',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Consistent across systems</div><div class="opt-sub">Same field names and formats everywhere</div></div><div class="opt-tag ot-ok">Low risk</div></div>
+      <div class="opt" id="nc-mixed" onclick="selOpt('nc','mixed',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Inconsistent</div><div class="opt-sub">"Status" in Jira vs "Stage" in Salesforce vs "Phase" in Smartsheet</div></div><div class="opt-tag ot-critical">High risk</div></div>
     </div>
-
-    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;">
-      <div class="field-label">Estimated % of records with incomplete required fields</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;"><label class="field-label">Estimated % of records with incomplete required fields</label></div>
     <div class="slider-block">
-      <div class="sl-label-row">
-        <div class="sl-label">Incompleteness rate</div>
-        <div class="sl-val" id="incomplete-val">30%</div>
-      </div>
-      <input type="range" min="0" max="80" value="30" id="incomplete-slider" oninput="updateSlider('incomplete-slider','incomplete-val','%')" style="--pct:37.5%">
-      <div class="sl-markers">
-        <span class="sl-marker">0%</span>
-        <span class="sl-marker">20%</span>
-        <span class="sl-marker">40%</span>
-        <span class="sl-marker">60%</span>
-        <span class="sl-marker">80%+</span>
-      </div>
+      <div class="sl-label-row"><div class="sl-label">Incompleteness rate</div><div class="sl-val" id="incomplete-val">30%</div></div>
+      <input type="range" min="0" max="80" value="30" id="incomplete-slider" oninput="updateSlider('incomplete-slider','incomplete-val','%')">
+      <div class="sl-markers"><span class="sl-marker">0%</span><span class="sl-marker">20%</span><span class="sl-marker">40%</span><span class="sl-marker">60%</span><span class="sl-marker">80%+</span></div>
     </div>
-
-    <div style="padding:0 24px 8px;position:relative;z-index:1;">
-      <div class="field-label">Cross-system conflicts — when systems disagree on the same record</div>
-    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">Cross-system conflicts — when systems disagree on the same record</label></div>
     <div class="opt-grid">
-      <div class="opt" id="csc-rare" onclick="selOpt('csc','rare',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Rare</div><div class="opt-sub">Systems mostly agree</div></div>
-        <div class="opt-tag ot-ok">Low risk</div>
-      </div>
-      <div class="opt" id="csc-common" onclick="selOpt('csc','common',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Common</div><div class="opt-sub">Different tools regularly show different answers</div></div>
-        <div class="opt-tag ot-critical">Critical</div>
-      </div>
+      <div class="opt" id="csc-rare" onclick="selOpt('csc','rare',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Rare — systems mostly agree</div><div class="opt-sub">Conflicts are exceptions, not the norm</div></div><div class="opt-tag ot-ok">Low risk</div></div>
+      <div class="opt" id="csc-common" onclick="selOpt('csc','common',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Common — tools regularly disagree</div><div class="opt-sub">Different systems show different answers for the same record</div></div><div class="opt-tag ot-critical">Critical</div></div>
     </div>
     <div style="height:20px;"></div>
   </div>
-  <div class="ab">
-    <button class="btn btn-ghost" onclick="nav('s-step2')">Back</button>
-    <button class="btn btn-teal" onclick="nav('s-step4')">Continue →</button>
-  </div>
+  <div class="ab"><button class="btn btn-ghost" onclick="nav('s-step2')">Back</button><button class="btn btn-teal" onclick="nav('s-step4')">Continue →</button></div>
 </div>
 
-<!-- STEP 4: AI READINESS -->
+<!-- STEP 4 -->
 <div id="s-step4" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-step3')">← Back</button>
-    <div class="tb-tag">Step 4 of 5</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-step3')">← Back</button><div class="tb-tag">Step 4 of 5</div><div></div></div>
   <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
   <div class="scroll">
     <div class="step-header">
-      <div class="step-num">Step 04 — AI & Decision Readiness</div>
+      <div class="step-num">Step 04 — AI &amp; Decision Readiness</div>
       <div class="step-title">How does your organization use data to decide?</div>
-      <div class="step-sub">These questions score your organization's current decision velocity and AI readiness — the two capabilities most correlated with competitive advantage in 2026.</div>
+      <div class="step-sub">These score your decision velocity and AI readiness — the two capabilities most correlated with competitive advantage in 2026.</div>
     </div>
-
-    <div style="padding:0 24px 8px;position:relative;z-index:1;">
-      <div class="field-label">Project status accuracy — how often do dashboards reflect reality?</div>
-    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">Project status accuracy</label></div>
     <div class="opt-grid">
-      <div class="opt" id="ps-accurate" onclick="selOpt('ps','accurate',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Usually accurate</div><div class="opt-sub">We trust our dashboards to reflect real status</div></div>
-        <div class="opt-tag ot-ok">Low risk</div>
-      </div>
-      <div class="opt" id="ps-optimistic" onclick="selOpt('ps','optimistic',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Often optimistic</div><div class="opt-sub">Projects stay "Green" longer than they should</div></div>
-        <div class="opt-tag ot-warn">Moderate</div>
-      </div>
-      <div class="opt" id="ps-manual" onclick="selOpt('ps','manual',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Manually entered — unreliable</div><div class="opt-sub">Status depends on who updates it and when</div></div>
-        <div class="opt-tag ot-critical">High risk</div>
-      </div>
+      <div class="opt" id="ps-accurate" onclick="selOpt('ps','accurate',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Usually accurate</div><div class="opt-sub">We trust our dashboards to reflect real status</div></div><div class="opt-tag ot-ok">Low risk</div></div>
+      <div class="opt" id="ps-optimistic" onclick="selOpt('ps','optimistic',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Often optimistic</div><div class="opt-sub">Projects stay "Green" longer than they should</div></div><div class="opt-tag ot-warn">Moderate</div></div>
+      <div class="opt" id="ps-manual" onclick="selOpt('ps','manual',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Manually entered — unreliable</div><div class="opt-sub">Status depends on who updates it and when</div></div><div class="opt-tag ot-critical">High risk</div></div>
     </div>
-
-    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;">
-      <div class="field-label">Strategy alignment — how quickly do projects reflect strategic shifts?</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;"><label class="field-label">How quickly do projects reflect strategic shifts?</label></div>
     <div class="opt-grid">
-      <div class="opt" id="sa-fast" onclick="selOpt('sa','fast',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Within days</div><div class="opt-sub">We can realign projects quickly when strategy shifts</div></div>
-        <div class="opt-tag ot-ok">Effective</div>
-      </div>
-      <div class="opt" id="sa-slow" onclick="selOpt('sa','slow',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Takes weeks or months</div><div class="opt-sub">Strategy shifts lag in project portfolios</div></div>
-        <div class="opt-tag ot-warn">Lagging</div>
-      </div>
-      <div class="opt" id="sa-unknown" onclick="selOpt('sa','unknown',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">We don't track this</div><div class="opt-sub">No visibility into which projects align with current strategy</div></div>
-        <div class="opt-tag ot-critical">No visibility</div>
-      </div>
+      <div class="opt" id="sa-fast" onclick="selOpt('sa','fast',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Within days</div><div class="opt-sub">We realign projects quickly when strategy shifts</div></div><div class="opt-tag ot-ok">Effective</div></div>
+      <div class="opt" id="sa-slow" onclick="selOpt('sa','slow',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Takes weeks or months</div><div class="opt-sub">Strategy shifts lag in project portfolios</div></div><div class="opt-tag ot-warn">Lagging</div></div>
+      <div class="opt" id="sa-unknown" onclick="selOpt('sa','unknown',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">We don't track this</div><div class="opt-sub">No visibility into which projects align with current strategy</div></div><div class="opt-tag ot-critical">No visibility</div></div>
     </div>
-
-    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;">
-      <div class="field-label">Estimated % of employee time spent finding, reconciling, or correcting data</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;"><label class="field-label">Estimated % of employee time spent on data reconciliation</label></div>
     <div class="slider-block">
-      <div class="sl-label-row">
-        <div class="sl-label">Wasted productivity</div>
-        <div class="sl-val" id="waste-val">25%</div>
-      </div>
-      <input type="range" min="5" max="50" value="25" id="waste-slider" oninput="updateSlider('waste-slider','waste-val','%')" style="--pct:42%">
-      <div class="sl-markers">
-        <span class="sl-marker">5%</span>
-        <span class="sl-marker">15%</span>
-        <span class="sl-marker">25%</span>
-        <span class="sl-marker">40%</span>
-        <span class="sl-marker">50%+</span>
-      </div>
+      <div class="sl-label-row"><div class="sl-label">Wasted productivity</div><div class="sl-val" id="waste-val">25%</div></div>
+      <input type="range" min="5" max="50" value="25" id="waste-slider" oninput="updateSlider('waste-slider','waste-val','%')">
+      <div class="sl-markers"><span class="sl-marker">5%</span><span class="sl-marker">15%</span><span class="sl-marker">25%</span><span class="sl-marker">40%</span><span class="sl-marker">50%+</span></div>
     </div>
     <div style="height:20px;"></div>
   </div>
-  <div class="ab">
-    <button class="btn btn-ghost" onclick="nav('s-step3')">Back</button>
-    <button class="btn btn-teal" onclick="nav('s-step5')">Continue →</button>
-  </div>
+  <div class="ab"><button class="btn btn-ghost" onclick="nav('s-step3')">Back</button><button class="btn btn-teal" onclick="nav('s-step5')">Continue →</button></div>
 </div>
 
-<!-- STEP 5: COST CONTEXT -->
+<!-- STEP 5 -->
 <div id="s-step5" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-step4')">← Back</button>
-    <div class="tb-tag">Step 5 of 5</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-step4')">← Back</button><div class="tb-tag">Step 5 of 5</div><div></div></div>
   <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
   <div class="scroll">
     <div class="step-header">
       <div class="step-num">Step 05 — Cost Context</div>
-      <div class="step-title">Last three questions — then we calculate your score.</div>
-      <div class="step-sub">These inputs calibrate your estimated cost-of-inaction — the dollar figure that most gets CFO attention.</div>
+      <div class="step-title">Three final questions — then we score.</div>
+      <div class="step-sub">These inputs calibrate your cost-of-inaction estimate — the number that gets CFO attention.</div>
     </div>
-
-    <div style="padding:0 24px 8px;position:relative;z-index:1;">
-      <div class="field-label">SaaS spend awareness — do you know your total annual spend?</div>
-    </div>
+    <div style="padding:0 24px 8px;position:relative;z-index:1;"><label class="field-label">SaaS spend visibility</label></div>
     <div class="opt-grid">
-      <div class="opt" id="ss-tracked" onclick="selOpt('ss','tracked',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Yes — actively tracked</div><div class="opt-sub">We audit licenses and usage regularly</div></div>
-      </div>
-      <div class="opt" id="ss-partial" onclick="selOpt('ss','partial',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Partially tracked</div><div class="opt-sub">We know the big ones but not the long tail</div></div>
-        <div class="opt-tag ot-warn">Waste likely</div>
-      </div>
-      <div class="opt" id="ss-unknown" onclick="selOpt('ss','unknown',this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Not tracked</div><div class="opt-sub">No central visibility into SaaS costs</div></div>
-        <div class="opt-tag ot-critical">High waste risk</div>
-      </div>
+      <div class="opt" id="ss-tracked" onclick="selOpt('ss','tracked',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Actively tracked</div><div class="opt-sub">We audit licenses and usage regularly</div></div></div>
+      <div class="opt" id="ss-partial" onclick="selOpt('ss','partial',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Partially tracked</div><div class="opt-sub">We know the big ones but not the long tail</div></div><div class="opt-tag ot-warn">Waste likely</div></div>
+      <div class="opt" id="ss-unknown" onclick="selOpt('ss','unknown',this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Not tracked</div><div class="opt-sub">No central visibility into SaaS costs</div></div><div class="opt-tag ot-critical">High waste risk</div></div>
     </div>
-
-    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;">
-      <div class="field-label">Have you experienced any of the following in the last 12 months?</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;"><label class="field-label">Any of these in the last 12 months? (select all that apply)</label></div>
     <div class="opt-grid">
-      <div class="opt" id="ev-audit" onclick="toggleMulti(this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">Compliance audit or regulatory review</div></div>
-      </div>
-      <div class="opt" id="ev-migration" onclick="toggleMulti(this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">System migration or platform change</div></div>
-      </div>
-      <div class="opt" id="ev-ma" onclick="toggleMulti(this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">M&A, acquisition, or restructuring</div></div>
-      </div>
-      <div class="opt" id="ev-ai" onclick="toggleMulti(this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">AI implementation that underdelivered</div></div>
-      </div>
-      <div class="opt" id="ev-none" onclick="toggleMulti(this)">
-        <div class="opt-check"></div>
-        <div class="opt-body"><div class="opt-name">None of the above</div></div>
-      </div>
+      <div class="opt" id="ev-audit" onclick="toggleMulti(this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">Compliance audit or regulatory review</div></div></div>
+      <div class="opt" id="ev-migration" onclick="toggleMulti(this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">System migration or platform change</div></div></div>
+      <div class="opt" id="ev-ma" onclick="toggleMulti(this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">M&amp;A, acquisition, or restructuring</div></div></div>
+      <div class="opt" id="ev-ai" onclick="toggleMulti(this)"><div class="opt-check"></div><div class="opt-body"><div class="opt-name">AI implementation that underdelivered</div></div></div>
     </div>
-
-    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;">
-      <div class="field-label">Estimated annual team salary for the team most impacted by data problems</div>
-    </div>
+    <div style="padding:0 24px 8px;margin-top:4px;position:relative;z-index:1;"><label class="field-label">Annual payroll for the team most impacted by data problems</label></div>
     <div class="slider-block">
-      <div class="sl-label-row">
-        <div class="sl-label">Affected team payroll</div>
-        <div class="sl-val" id="payroll-val">$4M</div>
-      </div>
+      <div class="sl-label-row"><div class="sl-label">Affected team payroll</div><div class="sl-val" id="payroll-val">$4M</div></div>
       <input type="range" min="500" max="50000" step="500" value="4000" id="payroll-slider" oninput="updatePayroll()">
-      <div class="sl-markers">
-        <span class="sl-marker">$500K</span>
-        <span class="sl-marker">$5M</span>
-        <span class="sl-marker">$15M</span>
-        <span class="sl-marker">$30M</span>
-        <span class="sl-marker">$50M+</span>
-      </div>
+      <div class="sl-markers"><span class="sl-marker">$500K</span><span class="sl-marker">$5M</span><span class="sl-marker">$15M</span><span class="sl-marker">$30M</span><span class="sl-marker">$50M+</span></div>
     </div>
-
     <div class="info-box">
       <div class="ib-icon">ℹ</div>
       <div class="ib-text">McKinsey: knowledge workers spend 20–30% of time searching for, reconciling, or correcting data. That payroll figure × 25% = your annual productivity waste from bad data — before AI costs.</div>
     </div>
     <div style="height:20px;"></div>
   </div>
-  <div class="ab">
-    <button class="btn btn-ghost" onclick="nav('s-step4')">Back</button>
-    <button class="btn btn-teal" onclick="startCalc()">Calculate My Score →</button>
-  </div>
+  <div class="ab"><button class="btn btn-ghost" onclick="nav('s-step4')">Back</button><button class="btn btn-teal" onclick="startCalc()">Calculate My Score →</button></div>
 </div>
 
 <!-- CALCULATING -->
 <div id="s-calc" class="screen">
-  <div class="grid-bg"></div>
-  <div class="calc-label">Analyzing your data environment</div>
-  <div class="calc-grid">
-    <div class="calc-dot"></div><div class="calc-dot"></div><div class="calc-dot"></div>
-    <div class="calc-dot"></div><div class="calc-dot"></div><div class="calc-dot"></div>
-    <div class="calc-dot"></div><div class="calc-dot"></div><div class="calc-dot"></div>
-  </div>
-  <div class="calc-title">Running your Data Health Scorecard</div>
-  <div class="calc-sub">Scoring 4 dimensions across your connected systems</div>
-  <div class="calc-log" id="calc-log">
-    <div class="calc-log-item done">Duplication risk assessment</div>
-    <div class="calc-log-item done">Naming consistency analysis</div>
-    <div class="calc-log-item" id="log3">Cross-system conflict scoring</div>
-    <div class="calc-log-item" id="log4">AI readiness evaluation</div>
-    <div class="calc-log-item" id="log5">Cost-of-inaction calculation</div>
-    <div class="calc-log-item" id="log6">Generating remediation roadmap</div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:40px 24px;text-align:center;position:relative;z-index:1;">
+    <div class="calc-label">Analyzing your data environment</div>
+    <div class="calc-grid">
+      <div class="calc-dot"></div><div class="calc-dot"></div><div class="calc-dot"></div>
+      <div class="calc-dot"></div><div class="calc-dot"></div><div class="calc-dot"></div>
+      <div class="calc-dot"></div><div class="calc-dot"></div><div class="calc-dot"></div>
+    </div>
+    <div class="calc-title">Running your Data Health Scorecard</div>
+    <div class="calc-sub">Scoring 4 dimensions across your connected systems</div>
+    <div class="calc-log">
+      <div class="calc-log-item done">Duplication risk assessment</div>
+      <div class="calc-log-item done">Naming consistency analysis</div>
+      <div class="calc-log-item" id="log3">Cross-system conflict scoring</div>
+      <div class="calc-log-item" id="log4">AI readiness evaluation</div>
+      <div class="calc-log-item" id="log5">Cost-of-inaction calculation</div>
+      <div class="calc-log-item" id="log6">Generating remediation roadmap</div>
+    </div>
   </div>
 </div>
 
 <!-- RESULTS -->
 <div id="s-results" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-splash')">← Start Over</button>
-    <div class="tb-tag">Your Score</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-splash')">← Start Over</button><div class="tb-tag">Your Score</div><div></div></div>
   <div class="scroll">
     <div class="results-hero">
       <div class="rh-bg">D</div>
@@ -747,7 +479,7 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
         <div class="grade-box grade-d"><div class="grade-letter">D</div></div>
         <div class="grade-info">
           <div class="grade-title">At-Risk Data Environment</div>
-          <div class="grade-sub">Your data has significant quality issues that are actively degrading AI performance, costing productivity, and creating compliance exposure. Immediate action is warranted.</div>
+          <div class="grade-sub">Significant data quality issues are actively degrading AI performance, costing productivity, and creating compliance exposure. Immediate action is warranted.</div>
         </div>
       </div>
       <div class="score-bar-wrap">
@@ -755,55 +487,33 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
         <div class="score-bar"><div class="score-fill" style="width:28%;background:var(--amber)"></div></div>
       </div>
     </div>
-
     <div class="dim-section">
-      <div class="dim-header">
-        <div class="dim-h-label">Score by Dimension</div>
-        <div style="font-family:var(--fm);font-size:8px;color:var(--text-soft);">Free Summary</div>
-      </div>
-
+      <div class="dim-header"><div class="dim-h-label">Score by Dimension</div><div style="font-family:var(--fm);font-size:8px;color:var(--text-soft);">Free Summary</div></div>
       <div class="dim-card">
-        <div class="dc-top">
-          <div class="dc-name">Data Duplication</div>
-          <div class="dc-score" style="color:var(--red)">22/100</div>
-        </div>
+        <div class="dc-top"><div class="dc-name">Data Duplication</div><div class="dc-score" style="color:var(--red)">22/100</div></div>
         <div class="dc-bar-track"><div class="dc-bar-fill" style="width:22%;background:var(--red)"></div></div>
-        <div class="dc-finding">Significant duplicate records detected across systems. AI running on this data will produce inconsistent and unreliable outputs. This is the single highest-risk dimension in your scorecard.</div>
+        <div class="dc-finding">Significant duplicate records detected across systems. AI running on this data will produce inconsistent outputs. This is the highest-risk dimension in your scorecard.</div>
         <div><div class="dc-flag flag-red">⚠ Critical — Address First</div></div>
       </div>
-
       <div class="dim-card">
-        <div class="dc-top">
-          <div class="dc-name">Naming & Field Consistency</div>
-          <div class="dc-score" style="color:var(--red)">31/100</div>
-        </div>
+        <div class="dc-top"><div class="dc-name">Naming &amp; Field Consistency</div><div class="dc-score" style="color:var(--red)">31/100</div></div>
         <div class="dc-bar-track"><div class="dc-bar-fill" style="width:31%;background:var(--red)"></div></div>
         <div class="dc-finding">Inconsistent field names across tools prevent cross-system intelligence. "Status" in Jira is not the same as "Stage" in Salesforce. AI cannot reconcile these without a normalization layer.</div>
         <div><div class="dc-flag flag-red">⚠ High Risk</div></div>
       </div>
-
       <div class="dim-card">
-        <div class="dc-top">
-          <div class="dc-name">AI & Decision Readiness</div>
-          <div class="dc-score" style="color:var(--amber)">44/100</div>
-        </div>
+        <div class="dc-top"><div class="dc-name">AI &amp; Decision Readiness</div><div class="dc-score" style="color:var(--amber)">44/100</div></div>
         <div class="dc-bar-track"><div class="dc-bar-fill" style="width:44%;background:var(--amber)"></div></div>
-        <div class="dc-finding">Project status is manually entered and reliability depends on individual discipline. Strategic alignment is slow to cascade. This creates the "optimism bias" pattern where problems surface too late.</div>
+        <div class="dc-finding">Project status is manually entered and reliability depends on individual discipline. Strategic alignment is slow to cascade — problems surface too late to prevent rework.</div>
         <div><div class="dc-flag flag-amber">⚡ Moderate Risk</div></div>
       </div>
-
       <div class="dim-card">
-        <div class="dc-top">
-          <div class="dc-name">Cost & Compliance Exposure</div>
-          <div class="dc-score" style="color:var(--amber)">38/100</div>
-        </div>
+        <div class="dc-top"><div class="dc-name">Cost &amp; Compliance Exposure</div><div class="dc-score" style="color:var(--amber)">38/100</div></div>
         <div class="dc-bar-track"><div class="dc-bar-fill" style="width:38%;background:var(--amber)"></div></div>
-        <div class="dc-finding">SaaS spend is not fully tracked — duplicate license waste is likely. Compliance gaps from inconsistent records create regulatory exposure. Integration and migration costs will be high without cleanup.</div>
+        <div class="dc-finding">SaaS spend is not fully tracked — duplicate license waste is likely. Compliance gaps from inconsistent records create regulatory exposure.</div>
         <div><div class="dc-flag flag-amber">⚡ Elevated Risk</div></div>
       </div>
     </div>
-
-    <!-- GATE -->
     <div class="gate-block">
       <div class="gate-bg">→</div>
       <div class="gate-label">Full Report — Unlock Free</div>
@@ -815,213 +525,98 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
         <div class="gate-item"><div class="gate-check">✓</div><div>AI readiness score: what you need to fix before deploying AI</div></div>
         <div class="gate-item"><div class="gate-check">✓</div><div>Estimated ROI from data cleanup — storage, licenses, productivity</div></div>
       </div>
-      <div class="gate-btns">
-        <button class="btn btn-teal" style="width:100%;padding:16px;" onclick="nav('s-unlock')">Unlock Full Report — Free →</button>
-        <div style="font-family:var(--fm);font-size:9px;color:var(--text-soft);text-align:center;margin-top:6px;letter-spacing:1px;text-transform:uppercase;">No credit card · Takes 60 seconds</div>
-      </div>
+      <button class="btn btn-teal" style="width:100%;padding:16px;" onclick="nav('s-unlock')">Unlock Full Report — Free →</button>
+      <div style="font-family:var(--fm);font-size:9px;color:var(--text-soft);text-align:center;margin-top:8px;letter-spacing:1px;text-transform:uppercase;">No credit card · Takes 60 seconds</div>
     </div>
     <div style="height:20px;"></div>
   </div>
 </div>
 
-<!-- UNLOCK / ACCOUNT -->
+<!-- UNLOCK -->
 <div id="s-unlock" class="screen">
-  <div class="tb">
-    <button class="bk" onclick="nav('s-results')">← Score</button>
-    <div class="tb-tag">Unlock Report</div>
-    <div></div>
-  </div>
+  <div class="tb"><button class="bk" onclick="nav('s-results')">← Score</button><div class="tb-tag">Unlock Report</div><div></div></div>
   <div class="scroll">
     <div class="unlock-hero">
       <div style="font-family:var(--fm);font-size:9px;letter-spacing:3px;color:var(--teal);text-transform:uppercase;margin-bottom:10px;">Last Step</div>
       <div class="unlock-title">Where should we send your full report?</div>
-      <div class="unlock-sub">Your scorecard is saved to your account. Revisit it anytime, share with your team, or book a free 30-minute data readiness review with an AegenSynq engineer.</div>
+      <div class="unlock-sub">Your scorecard is saved to your account. Revisit anytime, share with your team, or book a free 30-minute data readiness review with an AegenSynq engineer.</div>
     </div>
     <div style="height:20px;"></div>
-    <div class="field-block">
-      <label class="field-label">Full name</label>
-      <input class="field-input" type="text" placeholder="Jane Smith" />
-    </div>
-    <div class="field-block">
-      <label class="field-label">Work email</label>
-      <input class="field-input" type="email" placeholder="jane@company.com" />
-    </div>
-    <div class="field-block">
-      <label class="field-label">Organization name</label>
-      <input class="field-input" type="text" placeholder="Acme Corp" />
-    </div>
-    <div class="field-block">
-      <label class="field-label">Your role</label>
+    <div style="padding:0 24px;margin-bottom:16px;position:relative;z-index:1;"><label class="field-label">Full name</label><input class="field-input" type="text" placeholder="Jane Smith" /></div>
+    <div style="padding:0 24px;margin-bottom:16px;position:relative;z-index:1;"><label class="field-label">Work email</label><input class="field-input" type="email" placeholder="jane@company.com" /></div>
+    <div style="padding:0 24px;margin-bottom:16px;position:relative;z-index:1;"><label class="field-label">Organization name</label><input class="field-input" type="text" placeholder="Acme Corp" /></div>
+    <div style="padding:0 24px;margin-bottom:16px;position:relative;z-index:1;"><label class="field-label">Your role</label>
       <select class="field-select">
         <option value="">Select your role...</option>
-        <option>CTO / CIO / CISO</option>
-        <option>VP / Director of Engineering</option>
-        <option>VP / Director of Operations</option>
-        <option>Technical Program Manager</option>
-        <option>Data Engineer / Analyst</option>
-        <option>IT Manager / Director</option>
-        <option>COO / CEO</option>
-        <option>Other</option>
+        <option>CTO / CIO / CISO</option><option>VP / Director of Engineering</option>
+        <option>VP / Director of Operations</option><option>Technical Program Manager</option>
+        <option>Data Engineer / Analyst</option><option>IT Manager / Director</option>
+        <option>COO / CEO</option><option>Other</option>
       </select>
-    </div>
-    <div class="info-box">
-      <div class="ib-icon">ℹ</div>
-      <div class="ib-text">We use your email to send the full report and remediation roadmap. We don't spam. You can book a free engineering review directly from the report — no obligation.</div>
     </div>
     <div style="height:20px;"></div>
   </div>
-  <div class="ab">
-    <button class="btn btn-ghost" onclick="nav('s-results')">Back</button>
-    <button class="btn btn-teal" onclick="nav('s-report')">Get My Full Report →</button>
-  </div>
+  <div class="ab"><button class="btn btn-ghost" onclick="nav('s-results')">Back</button><button class="btn btn-teal" onclick="nav('s-report')">Get My Full Report →</button></div>
 </div>
 
 <!-- FULL REPORT -->
 <div id="s-report" class="screen">
-  <div class="tb">
-    <div class="tb-logo">Aegen<span>Synq</span></div>
-    <div style="font-family:var(--fm);font-size:8px;color:var(--teal);letter-spacing:2px;">FULL REPORT UNLOCKED</div>
-  </div>
+  <div class="tb"><div class="tb-logo">Aegen<span>Synq</span></div><div style="font-family:var(--fm);font-size:8px;color:var(--teal);letter-spacing:2px;">FULL REPORT UNLOCKED</div></div>
   <div class="scroll">
     <div class="report-header">
-      <div class="rpt-top">
-        <div class="rpt-wordmark">Aegen<span>Synq</span></div>
-        <div class="rpt-date">Generated March 2026</div>
-      </div>
+      <div class="rpt-top"><div class="rpt-wordmark">Aegen<span>Synq</span></div><div class="rpt-date">Generated March 2026</div></div>
       <div class="rpt-title">Data Health Scorecard — Full Report</div>
       <div class="rpt-org">YOUR ORGANIZATION · GRADE D · SCORE 34/100</div>
     </div>
-
-    <!-- ROI SECTION -->
     <div class="rpt-section">
       <div class="rpt-sec-label">Estimated Annual Cost of Inaction</div>
       <div class="roi-grid">
-        <div class="roi-card">
-          <div class="roi-val">$1.2M</div>
-          <div class="roi-label">Employee productivity lost to data reconciliation (McKinsey: 25% of payroll)</div>
-        </div>
-        <div class="roi-card">
-          <div class="roi-val">$180K</div>
-          <div class="roi-label">Estimated duplicate SaaS license waste (30% of estimated spend)</div>
-        </div>
-        <div class="roi-card">
-          <div class="roi-val">$240K</div>
-          <div class="roi-label">Cloud storage overage from duplicate records (est. 20% of storage bill)</div>
-        </div>
-        <div class="roi-card">
-          <div class="roi-val">$1.62M</div>
-          <div class="roi-label" style="color:var(--teal);font-weight:500;">Total estimated annual waste</div>
-        </div>
+        <div class="roi-card"><div class="roi-val">$1.2M</div><div class="roi-label">Employee productivity lost to data reconciliation (McKinsey: 25% of payroll)</div></div>
+        <div class="roi-card"><div class="roi-val">$180K</div><div class="roi-label">Estimated duplicate SaaS license waste (30% of estimated spend)</div></div>
+        <div class="roi-card"><div class="roi-val">$240K</div><div class="roi-label">Cloud storage overage from duplicate records (est. 20% of storage bill)</div></div>
+        <div class="roi-card"><div class="roi-val" style="color:var(--teal)">$1.62M</div><div class="roi-label" style="color:var(--text-mid);font-weight:500;">Total estimated annual waste</div></div>
       </div>
       <div style="margin-top:12px;padding:12px 14px;background:var(--teal-dim);border:1px solid rgba(0,212,170,.2);font-family:var(--fm);font-size:10px;color:var(--teal);">
         AegenSynq ROI estimate: Platform cost ~$6K/yr · First-year savings ~$1.62M · Return: 270:1
       </div>
     </div>
-
-    <!-- REMEDIATION ROADMAP -->
     <div class="rpt-section">
       <div class="rpt-sec-label">30/60/90-Day Remediation Roadmap</div>
       <div class="remediation-item">
         <div class="rem-priority rem-p1">Priority 1</div>
-        <div class="rem-body">
-          <div class="rem-title">Connect and deduplicate Jira + Salesforce records</div>
-          <div class="rem-desc">Entity resolution across your two highest-risk systems. Estimated 22% duplicate rate. AegenSynq's normalization engine resolves "John Smith" / "J. Smith" / "<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e3898c8b8da3808c8e93828d9acd808c8e">[email&#160;protected]</a>" across tools automatically with human approval.</div>
-          <div class="rem-timeline">Days 1–30 · Estimated impact: -$340K annual storage + productivity waste</div>
-        </div>
+        <div class="rem-body"><div class="rem-title">Connect and deduplicate Jira + Salesforce records</div><div class="rem-desc">Entity resolution across your two highest-risk systems. AegenSynq's normalization engine resolves "John Smith" / "J. Smith" / "john@company.com" across tools automatically with human approval.</div><div class="rem-timeline">Days 1–30 · Estimated impact: -$340K annual waste</div></div>
       </div>
       <div class="remediation-item">
         <div class="rem-priority rem-p1">Priority 1</div>
-        <div class="rem-body">
-          <div class="rem-title">Enforce naming convention standard across all connected tools</div>
-          <div class="rem-desc">Status fields across Jira ("In Progress"), Salesforce ("Active"), and Smartsheet ("In Flight") mapped to a single canonical schema. AI-assisted mapping with human review — typically 80-90% auto-accuracy.</div>
-          <div class="rem-timeline">Days 1–30 · Prerequisite for any cross-system AI</div>
-        </div>
+        <div class="rem-body"><div class="rem-title">Enforce naming convention standard across all connected tools</div><div class="rem-desc">Status fields across Jira, Salesforce, and Smartsheet mapped to a single canonical schema. AI-assisted mapping with human review — typically 80–90% auto-accuracy.</div><div class="rem-timeline">Days 1–30 · Prerequisite for any cross-system AI</div></div>
       </div>
       <div class="remediation-item">
         <div class="rem-priority rem-p2">Priority 2</div>
-        <div class="rem-body">
-          <div class="rem-title">Deploy automated data health monitoring</div>
-          <div class="rem-desc">Configurable daily/weekly health checks across all connected systems. Flags new duplicates, naming drift, and incomplete records before they compound. Human approval workflows at every stage.</div>
-          <div class="rem-timeline">Days 31–60 · Keeps clean data clean</div>
-        </div>
+        <div class="rem-body"><div class="rem-title">Deploy automated data health monitoring</div><div class="rem-desc">Configurable daily/weekly health checks across all connected systems. Flags new duplicates, naming drift, and incomplete records before they compound.</div><div class="rem-timeline">Days 31–60 · Keeps clean data clean</div></div>
       </div>
       <div class="remediation-item">
         <div class="rem-priority rem-p2">Priority 2</div>
-        <div class="rem-body">
-          <div class="rem-title">Activate objective project status across Jira + Smartsheet</div>
-          <div class="rem-desc">Override human-entered status with AI-assessed health scores based on actual data: schedule variance, budget burn, velocity trends, and resource utilization. Flags "optimism bias" with evidence.</div>
-          <div class="rem-timeline">Days 31–60 · Eliminates late-discovery problem</div>
-        </div>
+        <div class="rem-body"><div class="rem-title">Activate objective project status</div><div class="rem-desc">Override human-entered status with AI-assessed health scores based on actual data: schedule variance, budget burn, velocity trends. Eliminates the "optimism bias" problem.</div><div class="rem-timeline">Days 31–60 · Eliminates late-discovery</div></div>
       </div>
       <div class="remediation-item">
         <div class="rem-priority rem-p3">Priority 3</div>
-        <div class="rem-body">
-          <div class="rem-title">SaaS license audit and cost savings detection</div>
-          <div class="rem-desc">Scan procurement data and usage patterns for duplicate accounts, redundant tools, and unused seats. Customers typically recover 5-15% of vendor spend in Q1 — often more than the cost of the platform.</div>
-          <div class="rem-timeline">Days 61–90 · Estimated recovery: $120K–$240K yr 1</div>
-        </div>
+        <div class="rem-body"><div class="rem-title">SaaS license audit and cost savings detection</div><div class="rem-desc">Scan procurement data and usage patterns for duplicate accounts, redundant tools, and unused seats. Customers typically recover 5–15% of vendor spend in Q1.</div><div class="rem-timeline">Days 61–90 · Estimated recovery: $120K–$240K yr 1</div></div>
       </div>
     </div>
-
-    <!-- AI READINESS -->
     <div class="rpt-section">
       <div class="rpt-sec-label">AI Readiness Assessment</div>
-      <div class="readiness-meter">
-        <div class="rm-row">
-          <div class="rm-label">Data deduplication completeness</div>
-          <div class="rm-bar-track"><div class="rm-bar-fill" style="width:18%;background:var(--red)"></div></div>
-          <div class="rm-pct" style="color:var(--red)">18%</div>
-        </div>
-        <div class="rm-row">
-          <div class="rm-label">Cross-system naming normalization</div>
-          <div class="rm-bar-track"><div class="rm-bar-fill" style="width:12%;background:var(--red)"></div></div>
-          <div class="rm-pct" style="color:var(--red)">12%</div>
-        </div>
-        <div class="rm-row">
-          <div class="rm-label">Field completeness rate</div>
-          <div class="rm-bar-track"><div class="rm-bar-fill" style="width:65%;background:var(--amber)"></div></div>
-          <div class="rm-pct" style="color:var(--amber)">65%</div>
-        </div>
-        <div class="rm-row">
-          <div class="rm-label">Cross-system visibility</div>
-          <div class="rm-bar-track"><div class="rm-bar-fill" style="width:20%;background:var(--red)"></div></div>
-          <div class="rm-pct" style="color:var(--red)">20%</div>
-        </div>
-        <div class="rm-row">
-          <div class="rm-label">Governance & compliance readiness</div>
-          <div class="rm-bar-track"><div class="rm-bar-fill" style="width:40%;background:var(--amber)"></div></div>
-          <div class="rm-pct" style="color:var(--amber)">40%</div>
-        </div>
-      </div>
-      <div style="margin-top:14px;padding:12px 14px;background:var(--panel);border:1px solid var(--border);font-size:12px;color:var(--text-mid);line-height:1.6;">
-        <strong style="color:var(--text);">Assessment:</strong> Your current data environment is not ready for reliable AI deployment. Running AI on this data will produce confident-sounding but unreliable outputs. Address deduplication and naming normalization before activating any cross-system AI — including AI agents via MCP.
-      </div>
+      <div class="rm-row"><div class="rm-label">Data deduplication completeness</div><div class="rm-bar-track"><div class="rm-bar-fill" style="width:18%;background:var(--red)"></div></div><div class="rm-pct" style="color:var(--red)">18%</div></div>
+      <div class="rm-row"><div class="rm-label">Cross-system naming normalization</div><div class="rm-bar-track"><div class="rm-bar-fill" style="width:12%;background:var(--red)"></div></div><div class="rm-pct" style="color:var(--red)">12%</div></div>
+      <div class="rm-row"><div class="rm-label">Field completeness rate</div><div class="rm-bar-track"><div class="rm-bar-fill" style="width:65%;background:var(--amber)"></div></div><div class="rm-pct" style="color:var(--amber)">65%</div></div>
+      <div class="rm-row"><div class="rm-label">Cross-system visibility</div><div class="rm-bar-track"><div class="rm-bar-fill" style="width:20%;background:var(--red)"></div></div><div class="rm-pct" style="color:var(--red)">20%</div></div>
+      <div class="rm-row"><div class="rm-label">Governance &amp; compliance readiness</div><div class="rm-bar-track"><div class="rm-bar-fill" style="width:40%;background:var(--amber)"></div></div><div class="rm-pct" style="color:var(--amber)">40%</div></div>
+      <div style="margin-top:14px;padding:12px 14px;background:var(--panel);border:1px solid var(--border);font-size:12px;color:var(--text-mid);line-height:1.6;"><strong style="color:var(--text);">Assessment:</strong> Your current data environment is not ready for reliable AI deployment. Address deduplication and naming normalization before activating any cross-system AI — including AI agents via MCP.</div>
     </div>
-
-    <!-- NEXT STEPS -->
     <div class="next-steps">
       <div class="ns-label">Recommended Next Steps</div>
-      <div class="ns-step" onclick="showToast('Booking link sent to your email')">
-        <div class="ns-num">01</div>
-        <div>
-          <div class="ns-title">Book a Free Data Readiness Review</div>
-          <div class="ns-desc">30 minutes with an AegenSynq engineer. We'll walk through your highest-risk dimension and show you exactly what cleanup looks like on your actual tools. No obligation.</div>
-        </div>
-      </div>
-      <div class="ns-step" onclick="showToast('Self-service trial link sent to your email')">
-        <div class="ns-num">02</div>
-        <div>
-          <div class="ns-title">Start a Self-Service Data Health Scan</div>
-          <div class="ns-desc">Connect Jira and Salesforce in under 10 minutes. AegenSynq scans for duplicates and naming conflicts on your live data and returns a prioritized issue list. No code required.</div>
-        </div>
-      </div>
-      <div class="ns-step" onclick="showToast('ROI calculator opened')">
-        <div class="ns-num">03</div>
-        <div>
-          <div class="ns-title">Run the Full ROI Calculator</div>
-          <div class="ns-desc">Input your actual storage spend, SaaS costs, and headcount for a custom ROI model. Most mid-market organizations recover AegenSynq's cost within 90 days from storage and license savings alone.</div>
-        </div>
-      </div>
+      <div class="ns-step" onclick="showToast('Booking link sent to your email')"><div class="ns-num">01</div><div><div class="ns-title">Book a Free Data Readiness Review</div><div class="ns-desc">30 minutes with an AegenSynq engineer. We walk through your highest-risk dimension and show you what cleanup looks like on your actual tools. No obligation.</div></div></div>
+      <div class="ns-step" onclick="showToast('Self-service trial link sent to your email')"><div class="ns-num">02</div><div><div class="ns-title">Start a Self-Service Data Health Scan</div><div class="ns-desc">Connect Jira and Salesforce in under 10 minutes. AegenSynq scans for duplicates and naming conflicts on your live data and returns a prioritized issue list. No code required.</div></div></div>
+      <div class="ns-step" onclick="showToast('ROI calculator opened')"><div class="ns-num">03</div><div><div class="ns-title">Run the Full ROI Calculator</div><div class="ns-desc">Input your actual storage spend, SaaS costs, and headcount for a custom ROI model. Most mid-market organizations recover AegenSynq's cost within 90 days from savings alone.</div></div></div>
     </div>
     <div style="padding:0 24px 32px;text-align:center;">
       <div style="font-family:var(--fm);font-size:8px;letter-spacing:2px;color:var(--text-soft);text-transform:uppercase;margin-bottom:8px;">AegenSynq · Clean Data. Clear Decisions.</div>
@@ -1034,60 +629,65 @@ input[type=range]::-webkit-slider-runnable-track { background:linear-gradient(to
 
 <script>
 function nav(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
 }
 
 function selOpt(group, val, el) {
-  document.querySelectorAll('[id^="' + group + '-"]').forEach(o => o.classList.remove('sel'));
-  el.classList.add('sel');
-  const check = el.querySelector('.opt-check');
-  if (check) check.textContent = '✓';
-  document.querySelectorAll('[id^="' + group + '-"]').forEach(o => {
-    if (!o.classList.contains('sel')) {
-      const c = o.querySelector('.opt-check');
-      if (c) c.textContent = '';
-    }
+  document.querySelectorAll('[id^="' + group + '-"]').forEach(function(o) {
+    o.classList.remove('sel');
+    var c = o.querySelector('.opt-check');
+    if (c) c.textContent = '';
   });
+  el.classList.add('sel');
+  var check = el.querySelector('.opt-check');
+  if (check) check.textContent = '✓';
 }
 
 function toggleTool(el) {
   el.classList.toggle('sel');
+  var cb = el.querySelector('.tool-cb');
+  if (cb) cb.textContent = el.classList.contains('sel') ? '✓' : '';
 }
 
 function toggleMulti(el) {
   el.classList.toggle('sel');
-  const check = el.querySelector('.opt-check');
+  var check = el.querySelector('.opt-check');
   if (check) check.textContent = el.classList.contains('sel') ? '✓' : '';
 }
 
 function updateSlider(sliderId, valId, suffix) {
-  const slider = document.getElementById(sliderId);
-  const val = slider.value;
-  document.getElementById(valId).textContent = val + suffix;
-  const pct = ((val - slider.min) / (slider.max - slider.min)) * 100;
-  slider.style.setProperty('--pct', pct + '%');
+  var slider = document.getElementById(sliderId);
+  document.getElementById(valId).textContent = slider.value + suffix;
 }
 
 function updatePayroll() {
-  const slider = document.getElementById('payroll-slider');
-  const val = parseInt(slider.value);
-  const display = val >= 1000 ? '$' + (val/1000).toFixed(val % 1000 === 0 ? 0 : 1) + 'M' : '$' + val + 'K';
+  var slider = document.getElementById('payroll-slider');
+  var val = parseInt(slider.value);
+  var display = val >= 1000 ? '$' + (val / 1000).toFixed(val % 1000 === 0 ? 0 : 1) + 'M' : '$' + val + 'K';
   document.getElementById('payroll-val').textContent = display;
-  const pct = ((val - slider.min) / (slider.max - slider.min)) * 100;
-  slider.style.setProperty('--pct', pct + '%');
 }
 
 function startCalc() {
   nav('s-calc');
-  // Animate the log items sequentially
-  const timings = [600, 1100, 1600, 2100, 2700];
-  const ids = ['log3','log4','log5','log6'];
-  ids.forEach((id, i) => {
-    setTimeout(() => {
-      const el = document.getElementById(id);
+  var ids = ['log3', 'log4', 'log5', 'log6'];
+  var delays = [700, 1300, 1900, 2500];
+  ids.forEach(function(id, i) {
+    setTimeout(function() {
+      var el = document.getElementById(id);
       if (el) el.classList.add('done');
-    }, timings[i]);
+    }, delays[i]);
   });
-  setTimeout(() => nav('
+  setTimeout(function() { nav('s-results'); }, 3200);
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2800);
+}
+</script>
+</body>
+</html>
